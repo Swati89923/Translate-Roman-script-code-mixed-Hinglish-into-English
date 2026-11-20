@@ -1,0 +1,19 @@
+train n=10991  src_len mean=13.2 max=40  tgt_len mean=12.2 max=44  word-overlap mean=0.27
+val   n= 1373  src_len mean=13.4 max=38  tgt_len mean=12.3 max=40  word-overlap mean=0.27
+test  n= 1373  src_len mean=13.6 max=39  tgt_len mean=12.6 max=46  word-overlap mean=0.28
+
+Example training pairs:
+  HI-EN: @singhlicious ye sach hai milord
+  EN   : @singhlicious this is the truth, my lord!
+
+  HI-EN: @varungrover @dumlagakehaisha yashraj picchar kya baat hai bhaiya
+  EN   : @varungrover @dumlagakehaisha yashraj pictures awesome brother.
+
+  HI-EN: salman bhai loves us....so dnt be disappointed. ...ek din bhai se milne ka mauka sab ko milega
+  EN   : brother salman loves us....so don't be disappointed. ... everyone will get a chance to meet brother
+
+  HI-EN: soya tha yaar, bahar nikal ke call karta hu
+  EN   : slept friend, i call outside
+
+  HI-EN: family kaha hai umar kam-akal bhai <url>
+  EN   : where is family less intelligent bro <url>

@@ -1,0 +1,101 @@
+# Hinglish to English Machine Translation
+
+Translate Roman-script, code-mixed Hinglish (Hindi + English written in the Latin alphabet)
+into English. Course project, Group 8 (P08).
+
+**Research question:** how much does pretraining help on a low-resource, code-mixed
+translation task compared with training from scratch? We compare three model families on the
+same data and the same metrics (BLEU, chrF) and look at the kinds of errors each one makes.
+
+| Step | Model | Issue |
+| --- | --- | --- |
+| 1 | Data pipeline + shared evaluation | #1 |
+| 2 | Seq2seq LSTM with Bahdanau attention (from scratch) | #2 |
+| 3 | Transformer (from scratch) | #3 |
+| 4 | Fine-tuned mBART / mT5 / IndicTrans2 (pretrained) | #4 |
+
+## Team
+
+| Member | Issue |
+| --- | --- |
+| Swati Kumari | #1 data pipeline, evaluation, final comparison |
+| Pinky Rana | #2 LSTM + attention |
+| Ujjval Baijal | #3 Transformer from scratch |
+| Vinay Kumar | #4 pretrained fine-tuning |
+
+## Data
+
+PHINC: about 13.7k Hinglish-English sentence pairs of social media text.
+Srivastava and Singh, *PHINC: A Parallel Hinglish Social Media Code-Mixed Corpus for Machine
+Translation*, W-NUT 2020 ([paper](https://arxiv.org/abs/2004.09447),
+[Zenodo](https://doi.org/10.5281/zenodo.3605597)). The `data/` folder is not committed, so each
+person recreates it with the commands below.
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+python src/download_data.py     # downloads data/raw/phinc.csv
+python src/preprocess.py        # writes data/processed/{train,val,test}.tsv (seed 42, 80/10/10)
+python src/eda.py               # optional: statistics, saved to results/eda.txt
+python -m pytest                # tests for the pipeline and evaluation
+```
+
+After cleaning and removing duplicates: 10,991 train, 1,373 validation, 1,373 test pairs.
+
+### Cleaning rules (same for every model)
+
+- URLs become `<url>`; trailing "..." removed; whitespace collapsed.
+- Everything is lowercased (use `--keep-case` to turn this off).
+- Mentions, hashtags and emojis are kept, because the English reference keeps them too.
+- Empty rows and exact duplicate pairs are dropped, so no sentence is in both train and test.
+
+## How to use the shared code in your own model
+
+```python
+import sys; sys.path.insert(0, "src")           # or run from the repo root with `src.` imports
+from preprocess import read_tsv
+from vocab import Vocab
+from evaluate import evaluate, save_result
+
+train = read_tsv("data/processed/train.tsv")    # list of (hinglish, english)
+test = read_tsv("data/processed/test.tsv")
+
+vocab_src = Vocab([s for s, _ in train])        # build vocabularies from TRAIN only
+vocab_tgt = Vocab([t for _, t in train])
+
+# ... train your model, then translate the test sentences:
+hypotheses = [...]                              # one English string per test pair
+references = [t for _, t in test]
+scores = evaluate(hypotheses, references)       # {"bleu": ..., "chrf": ..., "num_sentences": ...}
+save_result(scores, "results/<your_model>.json", model="<your_model>")
+```
+
+Rules so the results stay comparable:
+
+1. Always train on `train.tsv`, tune on `val.tsv`, and report on `test.tsv` once at the end.
+2. Always score with `evaluate()`; do not compute BLEU yourself.
+3. Save the scores in `results/<model>.json` and your wrong translations in
+   `results/<model>_errors.csv` for the error analysis.
+
+## Repo layout
+
+```
+src/download_data.py   download PHINC from Zenodo
+src/preprocess.py      cleaning + fixed train/val/test split
+src/vocab.py           word-level vocabulary and SentencePiece helper
+src/evaluate.py        BLEU + chrF (sacreBLEU), used by all models
+src/eda.py             dataset statistics
+tests/                 pytest tests
+results/               score json files and error csvs (small files, committed)
+```
+
+## Results
+
+Filled in once issues #2, #3 and #4 are done (BLEU / chrF on the test set).
+
+| Model | BLEU | chrF |
+| --- | --- | --- |
+| LSTM + Bahdanau attention | | |
+| Transformer (scratch) | | |
+| Pretrained (fine-tuned) | | |

@@ -1,0 +1,12 @@
+# Core dependencies for the whole project.
+# Data pipeline + evaluation (issue #1) only needs sacrebleu and pytest.
+sacrebleu>=2.4
+pytest>=7.0
+
+# Needed by the model issues (#2, #3, #4); install them when you work on those.
+# torch
+# sentencepiece
+# transformers
+# datasets
+# accelerate
+# matplotlib
