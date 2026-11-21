@@ -16,6 +16,7 @@ Output (tab-separated, one pair per line, header "src<TAB>tgt"):
 
 import argparse
 import csv
+import html
 import random
 import re
 from pathlib import Path
@@ -31,12 +32,14 @@ URL_RE = re.compile(r"https?://\S+|www\.\S+")
 # Trailing "..." or the unicode ellipsis that tweets often end with after a cut-off URL.
 TRAILING_DOTS_RE = re.compile(r"(\.{2,}|…)\s*$")
 WS_RE = re.compile(r"\s+")
+LETTER_RE = re.compile(r"[^\W\d_]")  # any unicode letter (\w without digits and underscore)
 
 
 def clean_text(text: str, lowercase: bool = True) -> str:
     """Normalise one sentence.
 
     Policy (documented here so every model uses the same one):
+      * HTML codes such as &amp; and &lt; are decoded with html.unescape (first step).
       * URLs are replaced by the token "<url>" (the exact link carries no
         translation signal and would only blow up the vocabulary).
       * Trailing ellipsis characters are removed.
@@ -45,26 +48,33 @@ def clean_text(text: str, lowercase: bool = True) -> str:
       * Text is lowercased by default. Mentions (@user), hashtags and emojis
         are kept as they are, because the English reference keeps them too.
     """
+    text = html.unescape(text)  # "&amp;" -> "&", "&lt;" -> "<" (the raw tweets are HTML-escaped)
     text = URL_RE.sub("<url>", text)
     text = TRAILING_DOTS_RE.sub("", text)
     text = WS_RE.sub(" ", text).strip()
     return text.lower() if lowercase else text
 
 
+def has_letter(text: str) -> bool:
+    """True if the text contains at least one letter (not only digits / symbols / emoticons)."""
+    return LETTER_RE.search(text) is not None
+
+
 def load_pairs(raw_path: Path = RAW_PATH, lowercase: bool = True):
     """Read the raw csv and return a list of cleaned (src, tgt) pairs.
 
-    Rows with an empty side after cleaning are dropped, and exact duplicate
-    pairs are removed (keeping the first one), so an identical pair cannot end
-    up in two splits. Deduplication is per PAIR: the same source sentence with a
-    different translation is kept.
+    Rows are dropped when a side is empty or has no letter at all (the raw file
+    has translations that are only ")", "$" or "-)"; a model trained on them
+    learns to output ")"). Exact duplicate pairs are removed too (keeping the
+    first one), so an identical pair cannot end up in two splits. Deduplication
+    is per PAIR: the same source sentence with a different translation is kept.
     """
     pairs, seen = [], set()
     with open(raw_path, encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
             src = clean_text(row.get(SRC_COL) or "", lowercase)
             tgt = clean_text(row.get(TGT_COL) or "", lowercase)
-            if not src or not tgt or (src, tgt) in seen:
+            if not has_letter(src) or not has_letter(tgt) or (src, tgt) in seen:
                 continue
             seen.add((src, tgt))
             pairs.append((src, tgt))

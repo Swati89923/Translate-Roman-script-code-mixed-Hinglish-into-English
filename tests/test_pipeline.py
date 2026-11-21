@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 import pytest
 
 from evaluate import evaluate
-from preprocess import clean_text, read_tsv, split_pairs, write_tsv
+from preprocess import clean_text, has_letter, load_pairs, read_tsv, split_pairs, write_tsv
 from vocab import Vocab
 
 
@@ -23,6 +23,33 @@ def test_clean_text_replaces_urls_and_whitespace():
 
 def test_clean_text_keep_case():
     assert clean_text("Hello World", lowercase=False) == "Hello World"
+
+
+def test_clean_text_decodes_html_codes():
+    assert clean_text("rock &amp; roll &lt;3") == "rock & roll <3"
+
+
+def test_has_letter():
+    assert not has_letter(")") and not has_letter("$") and not has_letter("-) 3:)")
+    assert has_letter("ok :)") and has_letter("नमस्ते")
+
+
+def test_load_pairs_drops_junk_translations(tmp_path):
+    raw = tmp_path / "raw.csv"
+    lines = [
+        "Sentence,English_Translation",
+        "kya hua bhai,what happened brother",
+        "haha,)",                          # English side is only a symbol -> dropped
+        "lol,$",                           # dropped
+        "wah,-)",                          # dropped
+        "tom &amp; jerry,tom &amp; jerry",  # kept, html decoded
+        "kya hua bhai,what happened brother",  # exact duplicate -> dropped
+    ]
+    raw.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert load_pairs(raw) == [
+        ("kya hua bhai", "what happened brother"),
+        ("tom & jerry", "tom & jerry"),
+    ]
 
 
 def test_split_is_deterministic_and_disjoint():
