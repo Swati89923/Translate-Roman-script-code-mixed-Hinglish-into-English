@@ -55,8 +55,9 @@ def load_pairs(raw_path: Path = RAW_PATH, lowercase: bool = True):
     """Read the raw csv and return a list of cleaned (src, tgt) pairs.
 
     Rows with an empty side after cleaning are dropped, and exact duplicate
-    pairs are removed (keeping the first one) so that the same sentence cannot
-    end up in both train and test.
+    pairs are removed (keeping the first one), so an identical pair cannot end
+    up in two splits. Deduplication is per PAIR: the same source sentence with a
+    different translation is kept.
     """
     pairs, seen = [], set()
     with open(raw_path, encoding="utf-8", newline="") as f:

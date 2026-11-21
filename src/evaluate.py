@@ -4,8 +4,9 @@ All models (LSTM, Transformer, mBART / mT5 / IndicTrans2) MUST score their test
 predictions through `evaluate()` below. Using one function and one sacreBLEU
 configuration is what makes the numbers comparable in the final report.
 
-Use from Python:
-    from src.evaluate import evaluate, save_result
+Use from Python (put src/ on the path first, same style as the README):
+    import sys; sys.path.insert(0, "src")
+    from evaluate import evaluate, save_result
     scores = evaluate(hypotheses, references)      # two lists of strings
     save_result(scores, "results/lstm_attn.json", model="lstm_attn")
 
@@ -23,6 +24,11 @@ def evaluate(hypotheses, references):
 
     hypotheses: list of predicted English sentences
     references: list of reference English sentences (same length / order)
+
+    Both sides are lowercased before scoring. preprocess.py lowercases the
+    references, but pretrained models (mBART, mT5, IndicTrans2) output normal
+    capitalised English; without this they would be penalised for casing alone
+    and the pretrained-vs-scratch comparison would be biased.
     """
     import sacrebleu  # imported lazily so importing this module stays cheap
 
@@ -32,6 +38,9 @@ def evaluate(hypotheses, references):
         )
     if not hypotheses:
         raise ValueError("Cannot evaluate an empty list.")
+
+    hypotheses = [h.lower() for h in hypotheses]
+    references = [r.lower() for r in references]  # no-op for the default (lowercased) splits
 
     # sacreBLEU expects a LIST of reference streams (one per reference set).
     bleu = sacrebleu.corpus_bleu(hypotheses, [references])
@@ -66,7 +75,8 @@ def save_errors(sources, hypotheses, references, path, max_rows: int = 100) -> i
 
     rows = []
     for src, hyp, ref in zip(sources, hypotheses, references):
-        score = sacrebleu.sentence_chrf(hyp, [ref]).score
+        # Same lowercasing as evaluate(), so the ranking matches the reported scores.
+        score = sacrebleu.sentence_chrf(hyp.lower(), [ref.lower()]).score
         rows.append((score, src, hyp, ref))
     rows.sort(key=lambda r: r[0])  # worst first
 

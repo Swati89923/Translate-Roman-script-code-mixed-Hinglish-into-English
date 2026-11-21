@@ -29,7 +29,11 @@ def download(url: str = URL, out_path: Path = OUT_PATH) -> Path:
         print(f"{out_path} already exists, skipping download.")
         return out_path
     print(f"Downloading PHINC to {out_path} ...")
-    urllib.request.urlretrieve(url, out_path)
+    # Download to a temporary .part file and rename only when it is complete. If the
+    # download is interrupted, out_path never exists, so the next run retries.
+    part_path = out_path.with_name(out_path.name + ".part")
+    urllib.request.urlretrieve(url, part_path)
+    part_path.replace(out_path)
     print(f"Done ({out_path.stat().st_size / 1e6:.1f} MB).")
     return out_path
 

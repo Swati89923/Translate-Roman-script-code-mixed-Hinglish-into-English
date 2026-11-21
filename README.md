@@ -48,7 +48,12 @@ After cleaning and removing duplicates: 10,991 train, 1,373 validation, 1,373 te
 - URLs become `<url>`; trailing "..." removed; whitespace collapsed.
 - Everything is lowercased (use `--keep-case` to turn this off).
 - Mentions, hashtags and emojis are kept, because the English reference keeps them too.
-- Empty rows and exact duplicate pairs are dropped, so no sentence is in both train and test.
+- Empty rows and exact duplicate (Hinglish, English) pairs are dropped, so no identical pair is in
+  two splits. The same Hinglish sentence can still appear with a different translation (this
+  happens once: one validation sentence also occurs in train); test shares no source sentence
+  with train.
+- `evaluate()` lowercases predictions and references before scoring, so models that output
+  capitalised English (mBART, mT5) are not penalised for casing.
 
 ## How to use the shared code in your own model
 
