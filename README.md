@@ -1,22 +1,45 @@
 # Hinglish to English Machine Translation
 
 [![tests](https://github.com/Swati89923/Translate-Roman-script-code-mixed-Hinglish-into-English/actions/workflows/tests.yml/badge.svg)](https://github.com/Swati89923/Translate-Roman-script-code-mixed-Hinglish-into-English/actions/workflows/tests.yml)
+![python](https://img.shields.io/badge/python-3.10-blue)
+![task](https://img.shields.io/badge/task-machine%20translation-informational)
 
 Translate Roman-script, code-mixed Hinglish (Hindi and English mixed in one sentence, written in
 the Latin alphabet) into English. Course project, **Group 8 (P08)**.
 
-Example of the task (from the PHINC corpus, lowercased):
+**Jump to:** [Overview](#overview) · [Team](#team) · [Status](#project-status) · [Data](#data) ·
+[Quick start](#quick-start) · [Evaluation](#evaluation-protocol) · [Models](#models) ·
+[Results](#results) · [Limitations](#limitations-and-next-steps) · [How we work](#how-we-work)
+
+## Overview
+
+Social media users mix Hindi and English freely and spell Hindi words in Latin letters with no
+fixed spelling. That is hard for machine translation: there is little parallel data, spellings
+vary (`kya`, `kyaa`, `kyaaa`), and many English words appear unchanged inside Hindi sentences.
 
 | Hinglish (input) | English (reference) |
 | --- | --- |
 | `@singhlicious ye sach hai milord` | `@singhlicious this is the truth, my lord!` |
 | `family kaha hai umar kam-akal bhai <url>` | `where is family less intelligent bro <url>` |
 
-## Research question
+**Research question.** How much does **pretraining** help on a low-resource, code-mixed
+translation task compared with **training from scratch**? We train three model families on the
+same data, score them with the same metrics (BLEU and chrF) and compare the kinds of errors each
+one makes.
 
-How much does **pretraining** help on a low-resource, code-mixed translation task compared with
-**training from scratch**? We train three model families on the same data, score them with the same
-metrics (BLEU and chrF) and compare the kinds of errors each one makes.
+```mermaid
+flowchart LR
+    A[PHINC raw csv] --> B[preprocess.py<br/>clean + fixed split]
+    B --> C[train / val / test tsv]
+    C --> D1[LSTM + attention<br/>from scratch]
+    C --> D2[Transformer<br/>from scratch]
+    C --> D3[mBART / mT5 / IndicTrans2<br/>fine-tuned]
+    D1 --> E[evaluate.py<br/>BLEU + chrF]
+    D2 --> E
+    D3 --> E
+    E --> F[results/*.json<br/>+ error csv per model]
+    F --> G[comparison + error analysis]
+```
 
 ## Team
 
@@ -40,16 +63,26 @@ metrics (BLEU and chrF) and compare the kinds of errors each one makes.
 
 ## Data
 
-PHINC: about 13.7k Hinglish-English sentence pairs of social media text.
+**PHINC**: about 13.7k Hinglish-English sentence pairs of social media text.
 Srivastava and Singh, *PHINC: A Parallel Hinglish Social Media Code-Mixed Corpus for Machine
 Translation*, W-NUT 2020 ([paper](https://arxiv.org/abs/2004.09447),
 [Zenodo](https://doi.org/10.5281/zenodo.3605597)). The `data/` folder is not committed, so each
-person recreates it with the commands below.
+person recreates it with the commands in [Quick start](#quick-start).
 
-After cleaning (13,738 raw rows): **10,762 train, 1,345 validation, 1,345 test** pairs
-(80/10/10, seed 42). If you trained a model on an older split (10,991 / 1,373 / 1,373 or
-10,803 / 1,350 / 1,350), run `python src/preprocess.py` again and retrain, so that all models use
-exactly the same data.
+After cleaning (13,738 raw rows) the fixed split (80/10/10, seed 42) is:
+
+| Split | Pairs | Hinglish words per sentence (mean / max) | English words per sentence (mean / max) |
+| --- | --- | --- | --- |
+| Train | 10,762 | 13.3 / 40 | 12.5 / 46 |
+| Validation | 1,345 | 13.1 / 37 | 12.5 / 37 |
+| Test | 1,345 | 13.1 / 37 | 12.2 / 37 |
+
+About 28% of the Hinglish words also appear unchanged in the English sentence (English words,
+names, mentions, hashtags), a rough indicator of how much English is mixed in. Full statistics
+are in `results/eda.txt`.
+
+If you trained a model on an older split (10,991 / 1,373 / 1,373 or 10,803 / 1,350 / 1,350), run
+`python src/preprocess.py` again and retrain, so that all models use exactly the same data.
 
 ### Cleaning rules (same for every model)
 
@@ -65,9 +98,11 @@ exactly the same data.
   The same Hinglish sentence can still appear with a different translation (1 validation
   sentence and 1 test sentence also occur in train).
 
-## Setup
+## Quick start
 
 ```bash
+git clone https://github.com/Swati89923/Translate-Roman-script-code-mixed-Hinglish-into-English.git
+cd Translate-Roman-script-code-mixed-Hinglish-into-English
 pip install -r requirements.txt
 python src/download_data.py     # downloads data/raw/phinc.csv
 python src/preprocess.py        # writes data/processed/{train,val,test}.tsv
@@ -78,7 +113,7 @@ python -m pytest                # tests for the pipeline, evaluation and the LST
 The same tests run automatically on every pull request and on pushes to `main` with GitHub
 Actions (`.github/workflows/tests.yml`); the `tests` check must be green before merging.
 Training the models needs a GPU (for example a free Colab or Kaggle T4); the smoke-test options
-below run on a CPU.
+in the model sections run on a CPU.
 
 ## Evaluation protocol
 
@@ -123,8 +158,16 @@ On Colab, open `notebooks/lstm_attn_colab.ipynb` and run all cells. Hyperparamet
 `configs/lstm_attn.json` (embedding 256, encoder 2x256, decoder 512, dropout 0.3, Adam 1e-3,
 batch 64, gradient clipping 1.0, label smoothing 0.1, early stopping with patience 4, beam size 5).
 About 12% of the English training words are rare and become `<unk>`, so `<unk>` is blocked during
-decoding (this raised BLEU from 6.50 to 8.97). Outputs: `results/lstm_attn.json`, training curves,
-3 attention heatmaps and `results/lstm_attn_errors.csv`.
+decoding (this raised BLEU from 6.50 to 8.97).
+
+![LSTM training curves](results/lstm_attn_curves.png)
+
+Training loss keeps falling while validation loss stays flat after about epoch 5 to 10, so the
+model starts to overfit; early stopping ended training at epoch 15. The attention heatmap below
+shows the model aligning English words with the right Hinglish words (for example `very` with
+`bahut`). More heatmaps: `results/lstm_attn_attention_2.png` and `_3.png`.
+
+<img src="results/lstm_attn_attention_1.png" alt="Attention heatmap" width="380">
 
 ### 2. Transformer from scratch (Ujjval, #3)
 
@@ -163,9 +206,36 @@ A cell is empty until that model has been run on the current split.
 | IndicTrans2 fine-tuned | Vinay | | |
 | Zero-shot pretrained (no fine-tuning) | Vinay | | |
 
-Error analysis of the LSTM (50 worst translations tagged by hand): wrong meaning 17, junk output 14,
-noisy reference 9, repetition 4, English not copied 3, dropped words 2, wrong word choice 1.
-PHINC references are sometimes noisy themselves, which lowers every model's BLEU.
+**What we know so far (LSTM only).** Beam search beats greedy decoding by about 1.3 BLEU.
+Error analysis of the 50 worst translations, tagged by hand:
+
+| Error category | Count |
+| --- | --- |
+| Wrong meaning | 17 |
+| Junk output (learned from noisy data) | 14 |
+| Noisy reference | 9 |
+| Repetition | 4 |
+| English not copied | 3 |
+| Dropped words | 2 |
+| Wrong word choice | 1 |
+
+The question "does pretraining help?" can only be answered once the Transformer and the
+pretrained models have been run on the same split.
+
+## Limitations and next steps
+
+- **Noisy references.** PHINC translations are sometimes wrong or only loosely aligned (about 9 of
+  the 50 worst LSTM errors were tagged "noisy reference"), which lowers every model's BLEU.
+- **Small data.** About 10.8k training pairs; from-scratch models overfit quickly.
+- **Emoticon-only references.** About 34 training references are still only emoticons such as
+  `) :p` because `p` counts as a letter. The LSTM sometimes outputs `) :p` because of them.
+  Fixing this changes the split again, so it has to be decided once for all models.
+- **Single run per model.** Scores come from one seed; differences of a few tenths of BLEU are
+  not meaningful.
+
+Ideas for after the three model families are done (planned, not started): train on 10%, 25%, 50%
+and 100% of the data to see where pretraining helps most; repeat runs with several seeds or use a
+paired bootstrap test; break scores down by sentence length and amount of code-mixing.
 
 ## How we work
 
