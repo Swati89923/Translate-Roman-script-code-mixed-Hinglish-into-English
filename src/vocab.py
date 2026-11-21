@@ -57,13 +57,17 @@ class Vocab:
         return [self.bos_id] + ids + [self.eos_id] if add_bos_eos else ids
 
     def decode(self, ids):
-        """List of ids -> sentence. Stops at <eos> and skips special tokens."""
+        """List of ids -> sentence. Stops at <eos> and skips <pad>/<bos>.
+
+        <unk> is kept visible on purpose: in the error analysis csv we want to
+        see WHERE the model produced an unknown word instead of it vanishing.
+        """
         out = []
         for i in ids:
             if i == self.eos_id:
                 break
             tok = self.itos[i]
-            if tok not in SPECIALS:
+            if tok not in (PAD, BOS):
                 out.append(tok)
         return " ".join(out)
 
@@ -76,17 +80,23 @@ def train_sentencepiece(sentences, model_prefix: str, vocab_size: int = 8000):
     """
     import sentencepiece as spm  # imported here so the rest of the file needs no extra install
 
+    import os
     import tempfile
     # SentencePiece reads its training text from a file, so dump the sentences to a temp file.
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="utf-8") as f:
         f.write("\n".join(sentences))
         path = f.name
-    spm.SentencePieceTrainer.train(
-        input=path,
-        model_prefix=model_prefix,
-        vocab_size=vocab_size,
-        model_type="bpe",
-        character_coverage=1.0,
-        pad_id=0, unk_id=1, bos_id=2, eos_id=3,  # same special ids as the word-level Vocab
-    )
+    try:
+        spm.SentencePieceTrainer.train(
+            input=path,
+            model_prefix=model_prefix,
+            vocab_size=vocab_size,
+            model_type="bpe",
+            character_coverage=1.0,
+            pad_id=0, unk_id=1, bos_id=2, eos_id=3,  # same special ids as the word-level Vocab
+            # preprocess.py writes URLs as "<url>"; keep it as ONE token instead of "<", "url", ">".
+            user_defined_symbols=["<url>"],
+        )
+    finally:
+        os.remove(path)  # always remove the temp file, even if training fails
     return f"{model_prefix}.model"

@@ -1,19 +1,19 @@
-train n=10991  src_len mean=13.2 max=40  tgt_len mean=12.2 max=44  word-overlap mean=0.27
-val   n= 1373  src_len mean=13.4 max=38  tgt_len mean=12.3 max=40  word-overlap mean=0.27
-test  n= 1373  src_len mean=13.6 max=39  tgt_len mean=12.6 max=46  word-overlap mean=0.28
+train n=10762  src_len mean=13.3 max=40  tgt_len mean=12.5 max=46  word-overlap mean=0.28
+val   n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.5 max=37  word-overlap mean=0.28
+test  n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.2 max=37  word-overlap mean=0.27
 
 Example training pairs:
-  HI-EN: @singhlicious ye sach hai milord
-  EN   : @singhlicious this is the truth, my lord!
+  HI-EN: ghost rider 2's a bad movie compared to the 1st .
+  EN   : ghost rider 2's a bad movie compared to the 1st .
 
-  HI-EN: @varungrover @dumlagakehaisha yashraj picchar kya baat hai bhaiya
-  EN   : @varungrover @dumlagakehaisha yashraj pictures awesome brother.
+  HI-EN: .@arvindkejriwal kaam karne ka ek bahana.. na karne ke hazaar
+  EN   : .@arvindkejriwal one excuse for doing, while thousands for not doing
 
-  HI-EN: salman bhai loves us....so dnt be disappointed. ...ek din bhai se milne ka mauka sab ko milega
-  EN   : brother salman loves us....so don't be disappointed. ... everyone will get a chance to meet brother
+  HI-EN: @alllahdin tujhe haldi ka ughtan lagaye sakhiyan, tere saaya ko kanchan banaye sakhiyan <url> @integrated_me
+  EN   : @alllahdin sakhiyan apply turmeric paste on you, kanchan save your shadow sakhiyan <url> @integrated_me
 
-  HI-EN: soya tha yaar, bahar nikal ke call karta hu
-  EN   : slept friend, i call outside
+  HI-EN: ye horaha hai desh mein, saala hum mard hi kyu bardaasht kare sab? feminists saheliyan kahan hai?<url>
+  EN   : this is what is happening in the country. why do people ruin the reputation of men alone? where are you feminists now? <url>
 
-  HI-EN: family kaha hai umar kam-akal bhai <url>
-  EN   : where is family less intelligent bro <url>
+  HI-EN: ami tomake khub valobasi, i love u bhai jan
+  EN   : i love you a lot, i love u my dear brother
