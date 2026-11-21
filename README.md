@@ -133,6 +133,6 @@ Filled in once issues #2, #3 and #4 are done (BLEU / chrF on the test set).
 
 | Model | BLEU | chrF |
 | --- | --- | --- |
-| LSTM + Bahdanau attention (beam 5) | 6.50 | 23.01 |
+| LSTM + Bahdanau attention (beam 5) | 8.97 | 27.71 |
 | Transformer (scratch) | | |
 | Pretrained (fine-tuned) | | |
