@@ -106,7 +106,8 @@ python src/train_lstm.py --epochs 1 --limit 300   # quick smoke test on CPU
 On Colab, open `notebooks/lstm_attn_colab.ipynb` and run all cells.
 Hyperparameters: `configs/lstm_attn.json` (embedding 256, encoder 2x256, decoder 512, dropout 0.3,
 Adam 1e-3, batch 64, gradient clipping 1.0, label smoothing 0.1, early stopping on validation loss
-with patience 4, beam size 5).
+with patience 4, beam size 5, `<unk>` blocked during decoding because ~12% of the English
+training words are rare and become `<unk>`).
 Outputs: `results/lstm_attn.json` (test BLEU/chrF with beam search, greedy for comparison),
 training curves, 3 attention heatmaps and `results/lstm_attn_errors.csv`.
 
@@ -132,6 +133,6 @@ Filled in once issues #2, #3 and #4 are done (BLEU / chrF on the test set).
 
 | Model | BLEU | chrF |
 | --- | --- | --- |
-| LSTM + Bahdanau attention | | |
+| LSTM + Bahdanau attention (beam 5) | 6.50 | 23.01 |
 | Transformer (scratch) | | |
 | Pretrained (fine-tuned) | | |

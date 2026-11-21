@@ -218,7 +218,8 @@ def main() -> None:
     print(f"vocab: {len(vs)} Hinglish, {len(vt)} English | pairs: "
           f"{len(train_pairs)} train, {len(val_pairs)} val, {len(test_pairs)} test")
 
-    model = Seq2Seq(len(vs), len(vt), cfg, vs.pad_id, vt.bos_id, vt.eos_id).to(device)
+    model = Seq2Seq(len(vs), len(vt), cfg, vs.pad_id, vt.bos_id, vt.eos_id,
+                    vt.stoi["<unk>"]).to(device)
     print(f"parameters: {sum(p.numel() for p in model.parameters()):,}")
 
     if not args.eval_only:

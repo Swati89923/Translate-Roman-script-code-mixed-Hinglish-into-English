@@ -85,14 +85,25 @@ class Decoder(nn.Module):
 
 
 class Seq2Seq(nn.Module):
-    def __init__(self, src_vocab_size, tgt_vocab_size, cfg, pad_id=0, bos_id=2, eos_id=3):
+    def __init__(self, src_vocab_size, tgt_vocab_size, cfg, pad_id=0, bos_id=2, eos_id=3, unk_id=1):
         super().__init__()
         enc_dim = 2 * cfg["enc_hid_dim"]
         self.encoder = Encoder(src_vocab_size, cfg["emb_dim"], cfg["enc_hid_dim"],
                                cfg["dec_hid_dim"], cfg["dropout"], pad_id)
         self.decoder = Decoder(tgt_vocab_size, cfg["emb_dim"], enc_dim, cfg["dec_hid_dim"],
                                cfg["attn_dim"], cfg["dropout"], pad_id)
-        self.pad_id, self.bos_id, self.eos_id = pad_id, bos_id, eos_id
+        self.pad_id, self.bos_id, self.eos_id, self.unk_id = pad_id, bos_id, eos_id, unk_id
+        # When True, decoding never outputs <unk> (it picks the best real word instead).
+        # About 12% of the English training words are rare and become <unk>, so without
+        # this the model learns to write <unk> whenever it is unsure. Training is unchanged.
+        self.block_unk = cfg.get("block_unk", False)
+
+    def _decode_logits(self, logits):
+        """Logits used at decoding time (greedy and beam search)."""
+        if self.block_unk:
+            logits = logits.clone()
+            logits[:, self.unk_id] = float("-inf")
+        return logits
 
     def encode(self, src, src_len):
         enc_out, state = self.encoder(src, src_len)
@@ -132,7 +143,7 @@ class Seq2Seq(nn.Module):
         outs, attns = [], []
         for _ in range(max_len):
             logits, state, weights = self.decoder.step(y, state, enc_out, enc_proj, mask)
-            y = logits.argmax(-1)
+            y = self._decode_logits(logits).argmax(-1)
             outs.append(y)
             attns.append(weights)
             finished |= y == self.eos_id
@@ -167,7 +178,7 @@ class Seq2Seq(nn.Module):
             logits, (h, c), weights = self.decoder.step(
                 y, (h, c), enc_out.expand(k, -1, -1), enc_proj.expand(k, -1, -1), mask.expand(k, -1)
             )
-            log_probs = F.log_softmax(logits, dim=-1)
+            log_probs = F.log_softmax(self._decode_logits(logits), dim=-1)
             scores = torch.tensor([b[0] for b in beams], device=src.device).unsqueeze(1) + log_probs
             vocab_size = log_probs.size(1)
             top_scores, top_idx = scores.view(-1).topk(beam_size)
