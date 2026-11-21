@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+
+  "min_freq": 2,
+  "max_len": 60,
+
+  "emb_dim": 256,
+  "enc_hid_dim": 256,
+  "dec_hid_dim": 512,
+  "attn_dim": 256,
+  "dropout": 0.3,
+
+  "batch_size": 64,
+  "lr": 0.001,
+  "epochs": 30,
+  "patience": 4,
+  "clip": 1.0,
+  "teacher_forcing": 1.0,
+  "label_smoothing": 0.1,
+
+  "beam_size": 5,
+  "block_unk": true,
+  "length_penalty": 0.7,
+  "max_decode_len": 60
+}

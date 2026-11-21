@@ -1,0 +1,101 @@
+source,prediction,reference,chrf,error_category
+"hamari bus main bhi ek dengu aata tha ,",) :p,"in our bus also one dengu used to come ,",0.0,junk output (learned from noisy data)
+aree guddu to blkul mujhpr hi gya hai…hahaha lolzz ! !,) :p,guddu contains the qualities i have.,0.0,junk output (learned from noisy data)
+guddu to superb actor h . . . chhaa gya yaar,guddu is a very good friend,) :p,0.0,noisy reference
+#error!,) :p,#error!,0.0,noisy reference
+"kash hame bhi aise "" maa "" milti .",) :p,wish i got a mother like her.,0.0,junk output (learned from noisy data)
+sapne to dekho 500k @iamgunjangrunge,) :p,look at their dreams 500k @iamgunjangrunge,0.0,junk output (learned from noisy data)
+bharat humko jaan se pyara hai #guessthesong<url>,) :p,we love india more than our lives #guessthesong <url>,0.0,junk output (learned from noisy data)
+@rofl_india mujhe bhi milwao iss khushi se,@rofl_india even i also give this time?,-p,0.0,noisy reference
+g1 to g2: tera mera pyar amar. amar: mujhe tum dono pasand ho.,) :p,g1 to g2: your and my love is immortal. amar: i like both of you.,0.8,junk output (learned from noisy data)
+@_alisha_francis mujhe to aajkal whatsapp nahi kiya tumne,) :p,@_alisha_francis you haven’t whatsapped me recently,0.9,junk output (learned from noisy data)
+@justicearnab mujhe to ab se gaaliya padne lagi hai :/,) :p,@justicearnab now i am being told bad words :/,1.1,junk output (learned from noisy data)
+@lahirip tum dono se pyaar hai mujhe @being_humor,) :p,@lahirip i love both of you @being_humor,1.2,junk output (learned from noisy data)
+@pallavisingh13 arey joke tha bhai,) :p,@pallavisingh13 it was a joke brother.,1.2,junk output (learned from noisy data)
+is gag se pata chal gaya ki faisal bhai ke haath hindi mein thode tight hai . . . ( it's darpan and not drapan ),"this is the problem of the power of the button with the hindi of the people, . . it's because of india, and it's not getting married",-) :p :p,1.3,noisy reference
+mhanje kaahi pan bolayacha? nustach,i am amazing pan pan,where do you boil? nustach,2.4,wrong meaning
+rt @sheikhimaan : news flash : iss baar bheja tha . jeet gaye .,rt @galat_fehmi : news : this time again . . . .,) <url>,2.7,noisy reference
+coz pappu cant dance saala . . . . gucci ka perfume lagata h sala :p :d,i have got it . . . . . . . . . . . . .,"because pappu can't dance, he sprays on gucci's perfume",2.8,repetition
+"@0__1 unka haath, aur unka samaan jo chahe kare",) @irabbiaa,"@0__1 their hand and their luggage, it is upto them whatever they do.",2.8,junk output (learned from noisy data)
+congrats. ab to mere se nahi mangega,) now,congrats. nnw it will not be asked from me,3.6,dropped words
+stage loot liya bhai @varun_dvn,) @ra_bies,he won all heart on stage @varun_dvn,3.9,junk output (learned from noisy data)
+@princealyaseen3 wo to film shuru hone ke 10 minute baad hi aapko pata chal jayega.,) @huh_watnow,@princealyaseen3 you will know that 10 minutes after the film starts.,4.7,junk output (learned from noisy data)
+shuriya smriti ji. :),@ _ :),thank you smriti ji. :),4.8,dropped words
+jai ho #salmanverdict jaya ho #jayaverdict satyanash ho,hail ho ho ho ho ho ho ho,all hail #sakmanverdict all hail #jaya verdictbe annihilated,4.8,repetition
+64 in 1 leke aata . . . usme sab milte,in 1 in 1 . . . .,you should have bought 64 in 1. you must have got everything in that,4.8,repetition
+@itsmanimozhian mar ja bhai,hello brother brother.,"@itsmanimozhian man, please die.",4.9,wrong meaning
+"main deewani, mastani, haraami hogayi.",i am fine for you,"i will be crazy, mastani, bastard.",5.2,wrong meaning
+dis is gujju sparta :prajakta,who is far.,this is gujju sparta : prajakta,5.2,english not copied
+@ruddyindian aae maje?,when will you come?,@ruddyindian had fun?,5.4,wrong meaning
+@mehtaarupaaa aaye haaye dp,oh my god! 300 crore.,@mehtaarupaaa dp is here,5.8,wrong meaning
+"roz ka naya natak, petrol nahi ladki ka bhaav khaana hogaya.<url> â€¦",there is no solution for the price of the nation <url>,"new drama everyday,",6.0,noisy reference
+..... ye jahaan mil gayaa! yes yes!,yes this is an amazing yes yes,i got the whole world!,6.1,wrong meaning
+mobarak ied mobarak ??,@ meetunangali 50. ??,happy eid.,6.2,wrong meaning
+@abhi_bol bhai porn kam dekha kar,) @bababakchod,"@abhi_bol brother, please watch less porn",6.4,junk output (learned from noisy data)
+@roflgandhi_androoni khabar tey diye bhai,@ brother @ brother.,@roflgandhi_androoni you said a bad thing.,6.6,wrong meaning
+@narendramodi,@narendramodi @narendramodi,victory of abvp in university of delhi ....!!! sign of indian youth towards vision of shri modi ..??!!!,7.0,noisy reference
+rashtrawad led by kiran bedi ki jeet hogi !,"victory by god's by god's sake,",rashtrawad led by kiran bedi will win !,7.1,english not copied
+sanitary pad se seedha notepad,how will you get from from tomorrow,sanitary pad to directly notepad,7.1,wrong meaning
+bhai angreji batao na kuch.. kuch samaj ni aa raha,"brother, there is no joke for you.","man, please teach me english. i don't understand anything!",7.3,wrong meaning
+nehra uncle dismisses damaad ji . hum indians damaad ji se jyada kaam nhi karwaate .,nehra uncle and lion we are not going to work to work,) #indvspak #pakvsind #dilsay,7.5,noisy reference
+samajh nahin aa rahin...kis language me hain.,i am confused weather,can't understand ... in which language is it,7.5,wrong meaning
+@stupidusmaximus dhanyawaad bhau !!,developement takes !!,@stupidusmaximus thank you brother !!,7.7,wrong word choice
+mene phle bhi bola tha . . . ye guddu bigadtaa ja raha hai . . . samjhao koi ese . . ! ! !,i was also said that he is a lot of . . . . . . . . . . . . . . . . . . . . . . .,i have told you before too . guddu is becoming naughty. someone please make him understand.,7.8,repetition
+"""sudhar jaa chutiye"" #thingsigetalot",you go to go and study.,"""sudhar jaa chutiye"" #thingsigetalot",7.8,english not copied
+"dikh raha hai, angrezi bol lo yaar",are you telling me of the floor,"it is being seen, please speak in english, friends",7.8,wrong meaning
+"350 cr kamati ab,",how long live long live,she earns 350 crore now,7.9,wrong meaning
+koi milne hi ajaye karachi university ir kuple <url> #occupygezi #direngeziparkigeliyoruz #yandasmedyalimonsatonurluyasa,no one should be a very happy for you. <url>,somebody came from karachi university #occupygezi #direngeziparkigeliyoruz #yandasmedyalimonsatonurluyasa,8.0,wrong meaning
+hadh hai! @gsforever22,this is the same thing,enough is enough! @gsforever22,8.0,wrong meaning
+bhakt to aakhir bhakt hote hai chahe #modi ke ho ya #trump ke,"if you want to be people, or not?",devotees are devotees only whether they follow #modi or #trump,8.1,wrong meaning
+@akhil_bits ye chaal thi @retardedwriter,@ this was made me,@achil_bits what a very thi @ retardeddriver,8.1,noisy reference
+"guddu's sir: penalty kick "" master "" hai ky ? :p","do you want to know that "" how are you ?","guddu's sir: is he the penalty kick "" master "" ?",8.3,wrong meaning
+bhawnao me beh gya londa :p,in the whole world,caught in feelings boy,8.3,
+@_eperceptions sabr ka phal rt hota hai,this is the fruit of your eyes,@_eperceptions everyone's success will be retweet,8.4,
+bs thori si barish hojae ! #chotisikhawaish,this is a very good ! <url>,just let it rain a little! #chotisikhawaish,8.5,
+"aakhir tumhe aana hai, zara der lagegi.",the one who has gone crazy,"after all you have to come, it will take a while.",8.5,
+police peecha kar rahi mera.. pic.twitter.com/rzvl9fuv03,everyone is making fun,the police is following me . back pic.twitter.com/rzvl9fuv03,8.7,
+@abhitajain11 woh kaise karte hai?,how do you know how,@abhitajain11 how to do that?,8.9,
+"@openmindedatma samjha nahi, human in what sense? :)",oh! it's not a good in place,"@openmindedatma did not get, human in what sense? :)",8.9,
+fact of the day,the most of the day,halloween night is papa john's second busiest night of the year behind super bowl sunday .,8.9,
+@byomkesbakshi thank you hume bolo.. humne achche tweet karne chhod diye..taki tum log ko mauka mile,@byomkesbakshi thank you would have done by tweeting to give us to you people give me vote to you,) #maukamauka @iamkits,8.9,
+4 baj gaye lekin bhai abi aaye nahi,4 is 4 but not 4 o'clock,it is 4 already yet brother hasn't come.,9.0,
+"#mylifeinsixwords theke band hogaye hain, gurgaon chalo!",you are a lot of your eyes <url>,"#mylifeinsixwords contracts have shut, let's go to gurgaon!",9.0,
+kuch fork nahi padta<url>,nothing is nothing else,no one cares. <url>,9.0,
+muze to bhashan sunke bahut hasi aya rahe the . ?,i am going to get a lot of yours.,i found the speech really funny,9.1,
+kutthe aahes mitra ye ki!,"oh no, this is a weird",what a mess you are!,9.3,
+sooji hai ? halwa banwana tha,what should i want to do it,have coarse flour? have to make halwa,9.3,
+lol....theek hai yaar,it is a man friend,lol! it's okay mate.,9.3,
+@monikadad hospital me ilaaj karwa raha hun,it is there in my life,@ monikad hospital,9.3,
+procrastinating .i need to get ready for the 6th district chicago police rally against violence .chi-town cheer will be performing .king dr .,if i need to get ready for ready for the last part of the teacher will be given to be given to be released and will be released on sunday .,procrastinating,9.4,
+bahot pahonchi huwi hasti hai ram rahim ji<url>,you are a lot of ram time,ram rahim ji is very big celebrity <url>,9.5,
+daadhi badhao gandi shakal chupao. #jaagograhak,developement takes place shakal <url>,grow your beard and hide your ugly face! #jaagograhak,9.5,
+@bawli_poonch namoone bhare pade hai,@ meetunangali is there in love,@bawly_quote samples are full,9.6,
+@imtejasbarot bahut achcha hai,@ very very good well,"@imtejasbarot, that's very nice.",9.7,
+kuch na mile to #america pe daal dain,"nothing will happen here,",apko waqae lagta hai #trump itna jahil hai k in sub ko use kare ga ???,9.7,
+@kapeildeo mare hue bachcho par bhi ?? aapke bachche hai ?? @rowdytalks @ra_bies @steppennwolf,the time has come in the name of your eyes ??,@kapildev on dead children too ?? do you have any children ?? @roditox @ ra_bs @ steppenwolf,9.9,
+@desireux mandal aabhari _/\_,rest mandal _ / \ _,@desireux board thankful,9.9,
+refree ne paisa khaya hai.,@ has made money money,refree has been bribed,10.0,
+@zehernaak andar ghuste hi so jaana... train mein!,keep your eyes are so right,@zehernaak go to sleep quickly after entering the train,10.0,
+@jatinkiduniya koi nahi agli dekh le,no one did not see it,@jatinkiduniya no worries watch the next one,10.0,
+kaash mujhe aise padhai ke definitions yaad aate .,i used to talk like this. of me,i wish i could remember such definitions of study .,10.0,
+bhagvan ka kam karna sub se mukya darm hai.,what is less less less from your head,to do lord's work is the main religion.,10.1,
+"no sidhu today, gaaliya kisko deni hai?",no one who is your name?,"no sidhu today, whom to give swear words today?",10.1,
+hahaha . . . awesone . . . ye h guddu ke t . v . dekhne ke natije,hahaha . . . . . guddu in front of guddu,these are the results of the fact that gddu is watching a lot of television,10.1,
+kamal hassan hai aur kamla pasand hai. #aakthoo,this is the truth and the truth like this.,kamal is hassan and kamla is pasand,10.2,
+rt @aapdelhifeeds : sangam vihar - work of laying water pipeline in tughlakabad extension . mla,rt @ : supreme court - procedure work of size of shri rama in stars . . .,dinesh mohaniya <url>,10.2,
+get rishabh pant yaar<url>,get out of your eyes,get rishabh pant <url>,10.2,
+@prathamofficial koi rt nahi kar raha tha isliye,@ any i was not enough,@prathamofficial because no one was retweeting,10.2,
+sir aap itna hi kah diye to kafi hai ...:-),sir you are so much for me,"sir, that's enough if you say that ... :-)",10.3,
+kya yr maine b mis kr diya #uhh,what did i did i have to do it,"damn man, even i missed it",10.3,
+@anti_virus_ accha ! haan wella banda,@ good ! yes yes,@anti_virus_accha ! yes free boy,10.4,
+bhakt se bada anuyai hota hai.,there is a bigger scam,a follwer is greater than a devotee.,10.4,
+"bahot hi galat huwa ya, shraddhanjali arpit karte hai :'(",@ ek_samosa_dena @ ek_samosa_dena @ bolshoybuze are you?,"what happened was wrong, let us pay homage!",10.4,
+bekar isko host kar diya . .,you have made him,it was useless to host him,10.4,
+@onecuttingtea gaana hai re,it is a thief,@onekuttingti song hai re,10.4,
+ninda chacha ka bhatija aa gaya @kachra_peti @fussy_ca @miss_cherished,the uncle has gone has gone to god.,ninda uncle's nephew has arrived@kachra_peti @fussy_ca @miss_cherished,10.4,
+aap ko koi izzat nahi deta? ye lo.pic.twitter.com/1gixaxq9po,"you can not have any religion, <url>",doesn't anyone give you respect? see this pic.twitter.com/1gixaxq9po,10.4,
+zingav mitra! bindaas naach tu!,"thank you, shit came.",friend zingaav. you dance with full chill.,10.4,
+#thingsyoushouldntsayaftersex wallet ghar bhool gaya,did you go to home.,#thingsyoushouldntsayaftersex forgot wallet at home,10.5,
+gujjar movement ki yaade taaza ho gayee<url>,you are a very fantastic of everyone?,gujjar movement's memories freshened up <url>,10.5,
+udbilaao k aate hi big blow ho gya . . . .,the whole day of the t-shirt,"as soon as the otter came, big blow happened….",10.6,
+bollywood ne bachchon ko barbaad kar diya hai . . . . . . . . . satyanaash,you have made a lot of match.,bollywood has wated children's lives,10.6,
