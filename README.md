@@ -41,6 +41,9 @@ python src/eda.py               # optional: statistics, saved to results/eda.txt
 python -m pytest                # tests for the pipeline and evaluation
 ```
 
+The same tests run automatically on every pull request and on pushes to `main` with GitHub
+Actions (`.github/workflows/tests.yml`); the `tests` check must be green before merging.
+
 After cleaning and removing duplicates: 10,991 train, 1,373 validation, 1,373 test pairs.
 
 ### Cleaning rules (same for every model)
