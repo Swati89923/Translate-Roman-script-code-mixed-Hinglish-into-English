@@ -55,6 +55,16 @@ def clean_text(text: str, lowercase: bool = True) -> str:
     return text.lower() if lowercase else text
 
 
+def is_truncated(text: str) -> bool:
+    """True if the sentence was cut right after a "&".
+
+    In the raw file some tweets were split at "&amp;" (e.g. "from h&" / "m tomorrow"), so source
+    and English reference hold two halves of the same English sentence and the pair is
+    misaligned. A real sentence almost never ends with a bare "&", so we drop these pairs.
+    """
+    return text.rstrip().endswith("&")
+
+
 def has_letter(text: str) -> bool:
     """True if the text contains at least one letter (not only digits / symbols / emoticons)."""
     return LETTER_RE.search(text) is not None
@@ -75,6 +85,8 @@ def load_pairs(raw_path: Path = RAW_PATH, lowercase: bool = True):
             src = clean_text(row.get(SRC_COL) or "", lowercase)
             tgt = clean_text(row.get(TGT_COL) or "", lowercase)
             if not has_letter(src) or not has_letter(tgt) or (src, tgt) in seen:
+                continue
+            if is_truncated(src) or is_truncated(tgt):  # misaligned halves of a cut tweet
                 continue
             seen.add((src, tgt))
             pairs.append((src, tgt))

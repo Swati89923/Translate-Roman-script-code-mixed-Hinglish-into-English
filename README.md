@@ -41,8 +41,8 @@ python src/eda.py               # optional: statistics, saved to results/eda.txt
 python -m pytest                # tests for the pipeline and evaluation
 ```
 
-After cleaning (13,738 raw rows): 10,803 train, 1,350 validation, 1,350 test pairs.
-If you trained a model on an older split (10,991 / 1,373 / 1,373), run `python src/preprocess.py`
+After cleaning (13,738 raw rows): 10,762 train, 1,345 validation, 1,345 test pairs.
+If you trained a model on an older split (10,991 / 1,373 / 1,373 or 10,803 / 1,350 / 1,350), run `python src/preprocess.py`
 again and retrain, so that all models use exactly the same data.
 
 ### Cleaning rules (same for every model)
@@ -53,9 +53,11 @@ again and retrain, so that all models use exactly the same data.
 - Mentions, hashtags and emojis are kept, because the English reference keeps them too.
 - Pairs where either side has no letter at all are dropped. The raw file has 234 junk translations
   that are only `)`, `$` or `-)`; a model trained on them learns to output `)`.
+- Pairs where either side ends with a bare `&` are dropped (51 pairs). The raw tweets were cut at
+  `&amp;`, so source and reference are two halves of the same sentence (e.g. `...from h&` / `m tomorrow`).
 - Exact duplicate (Hinglish, English) pairs are dropped, so no identical pair is in two splits.
-  The same Hinglish sentence can still appear with a different translation (3 validation
-  sentences also occur in train); test shares no source sentence with train.
+  The same Hinglish sentence can still appear with a different translation (1 validation
+  sentence and 1 test sentence also occur in train).
 - `evaluate()` lowercases predictions and references before scoring, so models that output
   capitalised English (mBART, mT5) are not penalised for casing.
 

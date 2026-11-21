@@ -1,19 +1,19 @@
-train n=10803  src_len mean=13.2 max=40  tgt_len mean=12.4 max=46  word-overlap mean=0.28
-val   n= 1350  src_len mean=13.3 max=38  tgt_len mean=12.5 max=42  word-overlap mean=0.28
-test  n= 1350  src_len mean=13.4 max=40  tgt_len mean=12.7 max=38  word-overlap mean=0.28
+train n=10762  src_len mean=13.3 max=40  tgt_len mean=12.5 max=46  word-overlap mean=0.28
+val   n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.5 max=37  word-overlap mean=0.28
+test  n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.2 max=37  word-overlap mean=0.27
 
 Example training pairs:
-  HI-EN: celeb to tu hai. naam tere pe aayega
-  EN   : you are the celebrity. you will be blamed.
+  HI-EN: ghost rider 2's a bad movie compared to the 1st .
+  EN   : ghost rider 2's a bad movie compared to the 1st .
 
-  HI-EN: guddu k pillow b smile kr re , guddu ki tarah ! !
-  EN   : guddu's pillows are smiling, just like guddu!
+  HI-EN: .@arvindkejriwal kaam karne ka ek bahana.. na karne ke hazaar
+  EN   : .@arvindkejriwal one excuse for doing, while thousands for not doing
 
-  HI-EN: @the_sleigher haha that's sanjay dutt in rudraksh
-  EN   : @the_sleigher haha that's sanjay dutt in rudraksh
+  HI-EN: @alllahdin tujhe haldi ka ughtan lagaye sakhiyan, tere saaya ko kanchan banaye sakhiyan <url> @integrated_me
+  EN   : @alllahdin sakhiyan apply turmeric paste on you, kanchan save your shadow sakhiyan <url> @integrated_me
 
-  HI-EN: kaise ho bhaijan???? eagerly waiting for 17th
-  EN   : how are you bhaijan???? eagerly waiting for 17th
+  HI-EN: ye horaha hai desh mein, saala hum mard hi kyu bardaasht kare sab? feminists saheliyan kahan hai?<url>
+  EN   : this is what is happening in the country. why do people ruin the reputation of men alone? where are you feminists now? <url>
 
-  HI-EN: @someuser - ever hear tamias live cover of the winans" tomorrow "
-  EN   : @someuser - ever heard tamia's live cover of the winans " tomorrow "?
+  HI-EN: ami tomake khub valobasi, i love u bhai jan
+  EN   : i love you a lot, i love u my dear brother

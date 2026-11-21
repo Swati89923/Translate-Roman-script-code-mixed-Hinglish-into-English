@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 import pytest
 
 from evaluate import evaluate
-from preprocess import clean_text, has_letter, load_pairs, read_tsv, split_pairs, write_tsv
+from preprocess import clean_text, has_letter, is_truncated, load_pairs, read_tsv, split_pairs, write_tsv
 from vocab import Vocab
 
 
@@ -50,6 +50,23 @@ def test_load_pairs_drops_junk_translations(tmp_path):
         ("kya hua bhai", "what happened brother"),
         ("tom & jerry", "tom & jerry"),
     ]
+
+
+def test_is_truncated():
+    assert is_truncated("are you ready to shop the new collection from h&")
+    assert is_truncated("@someuser &  ")
+    assert not is_truncated("shopping at h&m today")  # "&" inside a sentence is fine
+
+
+def test_load_pairs_drops_cut_tweets(tmp_path):
+    lines = [
+        "Sentence,English_Translation",
+        "shop from h&amp;,m tomorrow from h&amp;",   # raw tweet cut at "&amp;" -> dropped
+        "kal h&amp;m jaunga,i will go to h&amp;m tomorrow",  # "&" inside -> kept
+    ]
+    raw = tmp_path / "raw.csv"
+    raw.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert load_pairs(raw) == [("kal h&m jaunga", "i will go to h&m tomorrow")]
 
 
 def test_split_is_deterministic_and_disjoint():
