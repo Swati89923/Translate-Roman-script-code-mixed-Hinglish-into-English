@@ -59,7 +59,7 @@ flowchart LR
 | 2 | LSTM + Bahdanau attention | Pinky | #2 | Done, results in `results/` |
 | 3 | Fine-tune mBART / mT5 / IndicTrans2 | Vinay | #4 | Done for mBART-50 and mT5 (fine-tuned and zero-shot), results in `results/`; IndicTrans2 not run |
 | 4 | Transformer from scratch | Ujjval | #3 | Done, results in `results/` |
-| 5 | Final comparison table, error analysis, report | Swati and team | | After steps 3 and 4 |
+| 5 | Final comparison, error analysis, report | Swati | #23 | Done: `src/compare.py`, [`docs/REPORT.md`](docs/REPORT.md) |
 
 ## Data
 
@@ -107,7 +107,8 @@ pip install -r requirements.txt
 python src/download_data.py     # downloads data/raw/phinc.csv
 python src/preprocess.py        # writes data/processed/{train,val,test}.tsv
 python src/eda.py               # optional: statistics, saved to results/eda.txt
-python -m pytest                # tests for the pipeline, evaluation and the LSTM model
+python -m pytest                # tests for the pipeline, evaluation and the models
+python src/compare.py           # after the models have run: ranking table, chart, error table
 ```
 
 The same tests run automatically on every pull request and on pushes to `main` with GitHub
@@ -232,7 +233,11 @@ hand for the fine-tuned models.
 ## Results
 
 Test set, 1,345 sentences, scored with `evaluate()` (BLEU and chrF, higher is better).
-A cell is empty until that model has been run on the current split.
+Regenerate the ranking, the chart and the error table from `results/` with `python src/compare.py`
+(outputs: `results/comparison.md`, `results/comparison.png`, `results/error_categories.md`,
+`results/error_examples.md`). The full write-up is in [`docs/REPORT.md`](docs/REPORT.md).
+
+![Comparison of all models](results/comparison.png)
 
 | Model | Trained by | BLEU | chrF |
 | --- | --- | --- | --- |
@@ -278,16 +283,28 @@ gives junk output, but when it does not know a Hindi word it often copies it int
 (for example `bhawnao`, `shraddhanjali`, `bekar`), because the BPE vocabulary is shared and copying
 is easy for it.
 
-On the same split, the from-scratch Transformer gets 28.51 BLEU and fine-tuned mBART-50 gets 36.76,
-so pretraining still helps by about 8 BLEU on this small dataset.
+Real examples of every error category: `results/error_examples.md`.
+
+## Conclusion
+
+- **mBART-50 fine-tuned is best** (36.76 BLEU, 57.87 chrF): 8.25 BLEU above the best from-scratch
+  model, and fine-tuning added 14.62 BLEU over its zero-shot score.
+- **A Transformer trained from scratch is a strong second** (28.51 BLEU) even with only about 10.8k
+  training pairs, and it beats zero-shot mBART-50 (22.14).
+- **Pretraining does not help every model:** fine-tuned mT5-small (18.97) is below the from-scratch
+  Transformer (it may also be under-tuned, see the limitations).
+- **The LSTM is last** (8.97), partly because of its word-level vocabulary (`<unk>`), so its gap to the
+  Transformer mixes architecture and tokenization.
+- All numbers are single runs. Details, discussion and limitations: [`docs/REPORT.md`](docs/REPORT.md).
 
 ## Limitations and next steps
 
 - **Noisy references.** PHINC translations are sometimes wrong or only loosely aligned (about 9 of
   the 50 worst LSTM errors were tagged "noisy reference"), which lowers every model's BLEU.
 - **Small data.** About 10.8k training pairs; from-scratch models overfit quickly.
-- **Emoticon-only references.** About 34 training references (and some test references such as
-  `) <url>`) are still only emoticons because `p` or `url` count as letters. The LSTM sometimes
+- **Emoticon-only references.** 39 training, 4 validation and 10 test references (0.74% of the test
+  set, counted in `results/eda.txt`) contain no real word, only emoticons, mentions, hashtags or
+  `<url>` (for example `) <url>`), because `p` or `url` count as letters. The LSTM sometimes
   outputs `) :p` because of them and they count as "noisy reference" errors.
   Fixing this changes the split again, so it has to be decided once for all models.
 - **Single run per model.** Scores come from one seed; differences of a few tenths of BLEU are
@@ -320,6 +337,7 @@ src/preprocess.py          cleaning + fixed train/val/test split
 src/vocab.py               word-level vocabulary and SentencePiece helper
 src/evaluate.py            BLEU + chrF (sacreBLEU) and error csv, used by all models
 src/eda.py                 dataset statistics
+src/compare.py             final ranking table, chart and error-category table from results/
 src/models/lstm_attn.py    LSTM + Bahdanau attention model (#2)
 src/train_lstm.py          training / evaluation script for #2
 src/models/transformer.py  Transformer encoder-decoder from scratch (#3)
@@ -328,6 +346,7 @@ src/finetune.py            fine-tuning of pretrained models (#4)
 configs/                   hyperparameters per model
 notebooks/                 Colab notebooks (LSTM, fine-tuning)
 tests/                     pytest tests
+docs/REPORT.md             final project report
 results/                   score json files, plots and error csvs (small files, committed)
 .github/workflows/         CI (pytest)
 ```

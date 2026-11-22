@@ -159,3 +159,11 @@ def test_save_errors_ranks_with_lowercase(tmp_path):
 def test_evaluate_length_mismatch():
     with pytest.raises(ValueError):
         evaluate(["a"], ["a", "b"])
+
+
+def test_has_real_word_in_eda():
+    from eda import has_real_word
+
+    assert not has_real_word(") <url>") and not has_real_word("-) :p :p")
+    assert not has_real_word(") @someone #tag")
+    assert has_real_word("happy eid.") and has_real_word(") thank you")
