@@ -58,7 +58,7 @@ flowchart LR
 | 1b | CI: pytest on every pull request | Swati | #9 | Done (merged) |
 | 2 | LSTM + Bahdanau attention | Pinky | #2 | Done, results in `results/` |
 | 3 | Fine-tune mBART / mT5 / IndicTrans2 | Vinay | #4 | Done for mBART-50 and mT5 (fine-tuned and zero-shot), results in `results/`; IndicTrans2 not run |
-| 4 | Transformer from scratch | Ujjval | #3 | In progress |
+| 4 | Transformer from scratch | Ujjval | #3 | Done, results in `results/` |
 | 5 | Final comparison table, error analysis, report | Swati and team | | After steps 3 and 4 |
 
 ## Data
@@ -172,8 +172,40 @@ shows the model aligning English words with the right Hinglish words (for exampl
 ### 2. Transformer from scratch (Ujjval, #3)
 
 Transformer encoder-decoder trained from random initialisation (no pretrained weights), to compare
-with the LSTM and with the pretrained models. In progress; this section is filled in when the
-pull request is merged.
+with the LSTM and with the pretrained models. The model is in `src/models/transformer.py` and is
+built from `torch.nn` encoder/decoder layers, with our own sinusoidal positional encoding, masks,
+greedy decoding and beam search.
+
+```bash
+python src/train_transformer.py --config configs/transformer_small.json   # 3 layers
+python src/train_transformer.py --config configs/transformer_deep.json    # 6 layers
+python src/train_transformer.py --config configs/transformer_deep.json --eval-only
+python src/train_transformer.py --epochs 1 --limit 300                    # quick smoke test on CPU
+```
+
+Setup used for both runs: one joint Hinglish + English SentencePiece BPE vocabulary of 4,000
+pieces, trained on the train split only, and shared by the encoder input, the decoder input and
+the output layer. We picked 4,000 because the data is small (about 10.8k pairs); a bigger
+vocabulary would leave many pieces with only a few examples, while a smaller one makes the
+sentences long. BPE also removes the `<unk>` problem the LSTM had with rare words, since any word
+can be split into pieces. The remaining settings were d_model 256, 4 heads, feed-forward 1024,
+dropout 0.3, pre-norm layers, label smoothing 0.1, Adam (0.9, 0.98) with the warmup learning rate
+from the paper (1,600 warmup steps), batch 64, gradient clipping 1.0, and up to 40 epochs with early
+stopping on validation loss (patience 5). Decoding was beam search with beam size 5 and length
+penalty 0.7. Both runs were trained on CPU with seed 42.
+
+| Setting | Layers (enc + dec) | Parameters | Best val loss | Test BLEU greedy | Test BLEU beam 5 | Test chrF beam 5 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `transformer_small` | 3 + 3 | 6.6M | 2.648 | 27.78 | 28.43 | 49.77 |
+| `transformer_deep` | 6 + 6 | 12.1M | 2.574 | 26.91 | **28.51** | **50.32** |
+
+What helped: going from 3 to 6 layers gave a lower validation loss and +0.55 chrF, but only +0.08
+BLEU, which is within single-run noise, and it took about twice as long to train. Beam search
+helped both models (+0.65 BLEU for small, +1.60 for deep). Neither run stopped early: the validation
+loss was still falling slowly at epoch 40, so more epochs would probably help a little. The deep
+setting is the one reported in `results/transformer.json` and `results/transformer_errors.csv`.
+
+![Transformer training curves](results/transformer_deep_curves.png)
 
 ### 3. Fine-tuned pretrained models (Vinay, #4)
 
@@ -206,7 +238,8 @@ A cell is empty until that model has been run on the current split.
 | --- | --- | --- | --- |
 | LSTM + Bahdanau attention (beam 5) | Pinky | 8.97 | 27.71 |
 | LSTM + Bahdanau attention (greedy) | Pinky | 7.64 | 27.17 |
-| Transformer from scratch | Ujjval | | |
+| Transformer from scratch, 6 layers (beam 5) | Ujjval | 28.51 | 50.32 |
+| Transformer from scratch, 6 layers (greedy) | Ujjval | 26.91 | 49.43 |
 | mBART-50 fine-tuned (3 epochs) | Vinay | 36.76 | 57.87 |
 | mBART-50 zero-shot | Vinay | 22.14 | 38.35 |
 | mT5-small fine-tuned (5 epochs) | Vinay | 18.97 | 33.79 |
@@ -217,29 +250,36 @@ A cell is empty until that model has been run on the current split.
 from-scratch LSTM: mBART-50 reaches 36.76 BLEU and mT5-small 18.97, against 8.97 for the LSTM.
 Fine-tuning helps both pretrained models (mBART +14.6 BLEU over zero-shot; mT5-small is useless
 zero-shot at 0.01 BLEU and reaches 18.97 after fine-tuning). Beam search beats greedy decoding by
-about 1.3 BLEU for the LSTM. These are single runs, the Transformer is still missing, and the mT5
-learning rate may be too low (see the limitations below).
+about 1.3 BLEU for the LSTM and about 1.6 BLEU for the Transformer. The Transformer trained from
+scratch (28.51 BLEU) is far above the LSTM (8.97) and above fine-tuned mT5-small (18.97), but still
+about 8 BLEU below fine-tuned mBART-50 (36.76). These are single runs, and the mT5 learning rate may
+be too low (see the limitations below).
 
 Error analysis: the 50 worst translations of each model, tagged by hand (the categories were
 chosen by the person who tagged them, and this shows the worst sentences, not all errors):
 
-| Error category | LSTM | mBART-50 | mT5-small |
-| --- | --- | --- | --- |
-| Wrong meaning | 17 | 21 | |
-| Junk output | 14 | | 10 |
-| Noisy reference | 9 | 14 | 3 |
-| Dropped words | 2 | 1 | 24 |
-| Repetition | 4 | 1 | 13 |
-| Transliteration error | | 5 | |
-| Wrong word choice | 1 | 5 | |
-| Code-mixing issue | | 3 | |
-| English not copied | 3 | | |
+| Error category | LSTM | Transformer | mBART-50 | mT5-small |
+| --- | --- | --- | --- | --- |
+| Wrong meaning | 17 | 20 | 21 | |
+| Junk output | 14 | 2 | | 10 |
+| Noisy reference | 9 | 13 | 14 | 3 |
+| Dropped words | 2 | 1 | 1 | 24 |
+| Repetition | 4 | 1 | 1 | 13 |
+| Hindi word left untranslated | | 11 | | |
+| Transliteration error | | | 5 | |
+| Wrong word choice | 1 | 1 | 5 | |
+| Code-mixing issue | | | 3 | |
+| English not copied | 3 | | | |
+| Correct but worded differently | | 1 | | |
 
 mBART writes fluent English and its worst cases are mostly wrong meaning of colloquial phrases or
-noisy references; mT5-small mostly drops words or repeats itself.
+noisy references; mT5-small mostly drops words or repeats itself. The Transformer almost never
+gives junk output, but when it does not know a Hindi word it often copies it into the English
+(for example `bhawnao`, `shraddhanjali`, `bekar`), because the BPE vocabulary is shared and copying
+is easy for it.
 
-The question "does pretraining help?" can only be answered once the Transformer and the
-pretrained models have been run on the same split.
+On the same split, the from-scratch Transformer gets 28.51 BLEU and fine-tuned mBART-50 gets 36.76,
+so pretraining still helps by about 8 BLEU on this small dataset.
 
 ## Limitations and next steps
 
@@ -282,6 +322,8 @@ src/evaluate.py            BLEU + chrF (sacreBLEU) and error csv, used by all mo
 src/eda.py                 dataset statistics
 src/models/lstm_attn.py    LSTM + Bahdanau attention model (#2)
 src/train_lstm.py          training / evaluation script for #2
+src/models/transformer.py  Transformer encoder-decoder from scratch (#3)
+src/train_transformer.py   training / evaluation script for #3
 src/finetune.py            fine-tuning of pretrained models (#4)
 configs/                   hyperparameters per model
 notebooks/                 Colab notebooks (LSTM, fine-tuning)
