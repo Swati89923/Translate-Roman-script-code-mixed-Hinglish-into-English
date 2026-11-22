@@ -26,16 +26,20 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
+# These come from src/ (shared code from issue #1). Running `python src/train_lstm.py`
+# puts src/ on the import path automatically, so plain imports work.
 from evaluate import evaluate, save_errors, save_result
 from models.lstm_attn import Seq2Seq
 from preprocess import read_tsv
 from vocab import Vocab
 
-NAME = "lstm_attn"
+NAME = "lstm_attn"  # prefix for every output file of this model
 SPLIT_DIR = Path("data/processed")
 
 
 def set_seed(seed: int) -> None:
+    # Fix every random number generator we use so a run can be repeated
+    # (weight init, dropout, batch shuffling). GPU runs can still differ slightly.
     random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -43,10 +47,13 @@ def set_seed(seed: int) -> None:
 
 def to_ids(text, vocab, max_len):
     """Sentence -> [<bos>, ..., <eos>], cut to at most max_len ids."""
+    # Cut to max_len - 2 first so <bos> and <eos> always fit.
     return [vocab.bos_id] + vocab.encode(text, add_bos_eos=False)[: max_len - 2] + [vocab.eos_id]
 
 
 def pad(seqs, pad_id):
+    # Sentences in a batch have different lengths, but a tensor must be
+    # rectangular, so shorter ones are filled up with <pad> at the end.
     out = torch.full((len(seqs), max(len(s) for s in seqs)), pad_id, dtype=torch.long)
     for i, s in enumerate(seqs):
         out[i, : len(s)] = torch.tensor(s)
@@ -54,8 +61,11 @@ def pad(seqs, pad_id):
 
 
 def make_loader(pairs, vs, vt, cfg, shuffle, seed=0):
+    # Convert all sentences to ids once up front, instead of in every epoch.
     data = [(to_ids(s, vs, cfg["max_len"]), to_ids(t, vt, cfg["max_len"])) for s, t in pairs]
 
+    # collate builds one batch: padded source, true source lengths (needed for
+    # pack_padded_sequence in the encoder) and padded target.
     def collate(batch):
         src, tgt = zip(*batch)
         return pad(src, vs.pad_id), torch.tensor([len(x) for x in src]), pad(tgt, vt.pad_id)
@@ -67,20 +77,32 @@ def make_loader(pairs, vs, vt, cfg, shuffle, seed=0):
 
 def run_epoch(model, loader, criterion, device, optimizer=None, clip=1.0, teacher_forcing=1.0):
     """One pass over `loader`. Trains if an optimizer is given. Returns loss per target token."""
+    # One function for both training and validation keeps the two loss values
+    # computed in exactly the same way.
     training = optimizer is not None
+    # model.train() turns dropout on, model.eval() (train(False)) turns it off.
     model.train(training)
     total, n_tokens = 0.0, 0
+    # No gradient bookkeeping during validation: faster and uses less memory.
     with torch.set_grad_enabled(training):
         for src, src_len, tgt in loader:
+            # src_len stays on the CPU because pack_padded_sequence needs it there.
             src, tgt = src.to(device), tgt.to(device)
+            # Validation always uses full teacher forcing, so val loss is comparable across epochs.
             logits = model(src, src_len, tgt, teacher_forcing if training else 1.0)
+            # The model predicts every word after <bos>, so the gold labels are tgt[:, 1:].
             gold = tgt[:, 1:]
+            # CrossEntropyLoss expects (N, V) and (N,), so flatten batch and time together.
             loss = criterion(logits.reshape(-1, logits.size(-1)), gold.reshape(-1))
             if training:
-                optimizer.zero_grad()
+                optimizer.zero_grad()  # gradients add up in PyTorch, so reset them first
                 loss.backward()
+                # Clip the gradient norm: RNNs can get exploding gradients, and one
+                # huge step could ruin the weights.
                 nn.utils.clip_grad_norm_(model.parameters(), clip)
                 optimizer.step()
+            # The loss is an average over real tokens; weight it by the token count so
+            # the epoch loss is a true per-token average even though batches differ in size.
             n = (gold != model.pad_id).sum().item()
             total += loss.item() * n
             n_tokens += n
@@ -93,12 +115,15 @@ def translate(model, sources, vs, vt, cfg, device, beam_size=1):
     model.eval()
     hyps = []
     if beam_size == 1:
+        # Greedy decoding works on whole batches; 128 sentences at a time fits in memory.
         for i in range(0, len(sources), 128):
             ids = [to_ids(s, vs, cfg["max_len"]) for s in sources[i:i + 128]]
             src_len = torch.tensor([len(x) for x in ids])
             out, _ = model.greedy_decode(pad(ids, vs.pad_id).to(device), src_len, cfg["max_decode_len"])
+            # Vocab.decode turns ids back into words and stops at <eos>.
             hyps += [vt.decode(o) for o in out]
     else:
+        # Our beam search handles one sentence at a time (simpler bookkeeping).
         for s in sources:
             ids = to_ids(s, vs, cfg["max_len"])
             src = torch.tensor([ids], device=device)
@@ -110,11 +135,16 @@ def translate(model, sources, vs, vt, cfg, device, beam_size=1):
 
 def train(model, train_pairs, val_pairs, vs, vt, cfg, device, ckpt_path):
     train_loader = make_loader(train_pairs, vs, vt, cfg, shuffle=True, seed=cfg["seed"])
+    # No need to shuffle validation data; order does not change the loss.
     val_loader = make_loader(val_pairs, vs, vt, cfg, shuffle=False)
     # Label smoothing only while training; validation loss is plain cross-entropy.
+    # Label smoothing puts a little probability on other words, so the model does
+    # not become over-confident; this helps on a small, noisy dataset.
+    # ignore_index: padding positions do not count in the loss.
     train_crit = nn.CrossEntropyLoss(ignore_index=vt.pad_id, label_smoothing=cfg["label_smoothing"])
     val_crit = nn.CrossEntropyLoss(ignore_index=vt.pad_id)
     optimizer = torch.optim.Adam(model.parameters(), lr=cfg["lr"])
+    # Halve the learning rate when the val loss stops improving for 1 epoch.
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=1)
 
     history, best, bad_epochs = [], float("inf"), 0
@@ -123,21 +153,29 @@ def train(model, train_pairs, val_pairs, vs, vt, cfg, device, ckpt_path):
         train_loss = run_epoch(model, train_loader, train_crit, device, optimizer,
                                cfg["clip"], cfg["teacher_forcing"])
         val_loss = run_epoch(model, val_loader, val_crit, device)
+        # Val BLEU (greedy, because it is fast) is only tracked for the training
+        # curves; the loss shows how well the model fits, BLEU shows translation quality.
         val_hyps = translate(model, [s for s, _ in val_pairs], vs, vt, cfg, device)
         val_bleu = evaluate(val_hyps, [t for _, t in val_pairs])["bleu"]
         scheduler.step(val_loss)
         history.append({"epoch": epoch, "train_loss": round(train_loss, 4),
                         "val_loss": round(val_loss, 4), "val_bleu": val_bleu})
 
+        # Checkpointing: save only when the val loss is the best so far, so at the
+        # end we test the best epoch, not the last (possibly overfitted) one.
         improved = val_loss < best
         if improved:
             best, bad_epochs = val_loss, 0
+            # Save the vocabularies too, so a later --eval-only run can check
+            # that the checkpoint belongs to the same train split.
             torch.save({"model": model.state_dict(), "config": cfg,
                         "src_itos": vs.itos, "tgt_itos": vt.itos}, ckpt_path)
         else:
             bad_epochs += 1
         print(f"epoch {epoch:2d}  train {train_loss:.3f}  val {val_loss:.3f}  "
               f"val BLEU {val_bleu:5.2f}  {time.time() - start:4.0f}s{'  *saved' if improved else ''}")
+        # Early stopping: if val loss has not improved for `patience` epochs the
+        # model is only overfitting, so further training is wasted time.
         if bad_epochs >= cfg["patience"]:
             print(f"Early stopping: no val-loss improvement for {cfg['patience']} epochs.")
             break
@@ -145,12 +183,14 @@ def train(model, train_pairs, val_pairs, vs, vt, cfg, device, ckpt_path):
 
 
 def plot_curves(history, path):
+    # Imported here so the rest of the script does not need matplotlib.
     import matplotlib
-    matplotlib.use("Agg")
+    matplotlib.use("Agg")  # draw to a file; no screen needed (Colab / servers)
     import matplotlib.pyplot as plt
 
     epochs = [h["epoch"] for h in history]
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+    # Train loss includes label smoothing, so it is not on exactly the same scale as val loss.
     ax1.plot(epochs, [h["train_loss"] for h in history], label="train (label-smoothed)")
     ax1.plot(epochs, [h["val_loss"] for h in history], label="validation")
     ax1.set_xlabel("epoch"), ax1.set_ylabel("loss per token"), ax1.legend()
@@ -159,11 +199,12 @@ def plot_curves(history, path):
     fig.suptitle("LSTM + Bahdanau attention")
     fig.tight_layout()
     fig.savefig(path, dpi=150)
-    plt.close(fig)
+    plt.close(fig)  # free the memory of the figure
 
 
 @torch.no_grad()
 def plot_attention(model, sentence, vs, vt, cfg, device, path):
+    """Heatmap of the attention weights: which source word each output word looked at."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -173,9 +214,12 @@ def plot_attention(model, sentence, vs, vt, cfg, device, path):
     out, attn = model.greedy_decode(torch.tensor([ids], device=device),
                                     torch.tensor([len(ids)]), cfg["max_decode_len"])
     out = out[0]
+    # Keep only the rows of the words that were actually output (up to <eos>).
     weights = attn[0, : len(out)].cpu().numpy()  # (output words, source words)
+    # Figure size grows with the sentence length so the labels stay readable.
     fig, ax = plt.subplots(figsize=(0.5 * len(ids) + 2, 0.5 * len(out) + 2))
     ax.imshow(weights, cmap="Blues", aspect="auto")
+    # Labels come from the vocab, so rare words show up as <unk> here.
     ax.set_xticks(range(len(ids)), [vs.itos[i] for i in ids], rotation=60, ha="right")
     ax.set_yticks(range(len(out)), [vt.itos[i] for i in out])
     ax.set_xlabel("Hinglish source"), ax.set_ylabel("English output")
@@ -192,13 +236,16 @@ def main() -> None:
     parser.add_argument("--eval-only", action="store_true", help="skip training, load the checkpoint")
     args = parser.parse_args()
 
+    # All hyperparameters are in one json file, so a run is described by that file.
     cfg = json.loads(Path(args.config).read_text(encoding="utf-8"))
     if args.epochs:
         cfg["epochs"] = args.epochs
     set_seed(cfg["seed"])
+    # Use the GPU when there is one (Colab), otherwise fall back to the CPU.
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device: {device}")
 
+    # The fixed splits from preprocess.py, the same files every model uses.
     train_pairs = read_tsv(SPLIT_DIR / "train.tsv")
     val_pairs = read_tsv(SPLIT_DIR / "val.tsv")
     test_pairs = read_tsv(SPLIT_DIR / "test.tsv")
@@ -213,6 +260,9 @@ def main() -> None:
     ckpt_path = ckpt_dir / f"{NAME}.pt"
 
     # Vocabularies from the TRAIN split only.
+    # Building them from val/test would leak information about the test data.
+    # Separate vocabularies for Hinglish and English, because the two sides use
+    # different words. min_freq=2 drops words seen only once (mostly typos and usernames).
     vs = Vocab([s for s, _ in train_pairs], min_freq=cfg["min_freq"])
     vt = Vocab([t for _, t in train_pairs], min_freq=cfg["min_freq"])
     print(f"vocab: {len(vs)} Hinglish, {len(vt)} English | pairs: "
@@ -227,22 +277,31 @@ def main() -> None:
         (out_dir / f"{NAME}_history.json").write_text(json.dumps(history, indent=2), encoding="utf-8")
         plot_curves(history, out_dir / f"{NAME}_curves.png")
 
+    # Load the BEST checkpoint (lowest val loss), not the weights of the last epoch.
     ckpt = torch.load(ckpt_path, map_location=device)
+    # A checkpoint trained on a different split would have different word ids,
+    # which would silently give wrong translations, so stop with an error instead.
     if ckpt["src_itos"] != vs.itos or ckpt["tgt_itos"] != vt.itos:
         raise SystemExit("Checkpoint vocabulary does not match the current train split.")
     model.load_state_dict(ckpt["model"])
 
     # Test set: used once, at the end.
+    # All choices (epochs, hyperparameters) were made on the validation set, so the
+    # test score is an honest estimate of how the model does on unseen sentences.
     sources = [s for s, _ in test_pairs]
     references = [t for _, t in test_pairs]
+    # Greedy and beam search are both scored, to show what beam search adds.
     greedy = evaluate(translate(model, sources, vs, vt, cfg, device), references)
     beam_hyps = translate(model, sources, vs, vt, cfg, device, beam_size=cfg["beam_size"])
     beam = evaluate(beam_hyps, references)
     print(f"test greedy: BLEU {greedy['bleu']}  chrF {greedy['chrf']}")
     print(f"test beam {cfg['beam_size']}: BLEU {beam['bleu']}  chrF {beam['chrf']}")
 
+    # The main reported score is beam search; greedy and the config are stored next
+    # to it so the result file says exactly how it was produced.
     save_result({**beam, "decoding": f"beam{cfg['beam_size']}", "greedy": greedy, "config": cfg},
                 out_dir / f"{NAME}.json", model=NAME)
+    # Worst translations (lowest sentence chrF first) for the manual error analysis.
     n = save_errors(sources, beam_hyps, references, out_dir / f"{NAME}_errors.csv")
     print(f"wrote {n} rows to {out_dir / (NAME + '_errors.csv')}")
 
@@ -253,5 +312,7 @@ def main() -> None:
     print(f"saved plots to {out_dir}/")
 
 
+# Only run main() when the file is executed directly, not when it is imported
+# (for example by a test).
 if __name__ == "__main__":
     main()
