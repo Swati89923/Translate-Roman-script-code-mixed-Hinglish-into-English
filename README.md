@@ -57,7 +57,7 @@ flowchart LR
 | 1 | Data pipeline, shared evaluation, tests | Swati | #1, #7 | Done (merged) |
 | 1b | CI: pytest on every pull request | Swati | #9 | Done (merged) |
 | 2 | LSTM + Bahdanau attention | Pinky | #2 | Done, results in `results/` |
-| 3 | Fine-tune mBART / mT5 / IndicTrans2 | Vinay | #4 | Code merged, full runs and scores pending |
+| 3 | Fine-tune mBART / mT5 / IndicTrans2 | Vinay | #4 | Done for mBART-50 and mT5 (fine-tuned and zero-shot), results in `results/`; IndicTrans2 not run |
 | 4 | Transformer from scratch | Ujjval | #3 | In progress |
 | 5 | Final comparison table, error analysis, report | Swati and team | | After steps 3 and 4 |
 
@@ -189,7 +189,13 @@ python src/finetune.py --model mt5 --max-train 64 --max-test 20 --epochs 1   # C
 ```
 
 Training uses gradient accumulation and mixed precision on GPU (fp32 for mT5, which is unstable in
-fp16). Scores are written to `results/finetune_<model>.json`. Full runs on a GPU are still pending.
+fp16). Scores are written to `results/finetune_<model>.json`.
+
+**What was run** (Colab T4, `notebooks/finetune_colab.ipynb`, batch 8 with gradient accumulation 4,
+learning rate 3e-5, beam 4, seed 42): mBART-50 for 3 epochs and mT5-small for 5 epochs, each also
+evaluated zero-shot (`--epochs 0`). IndicTrans2 and the `--translit` experiment were not run.
+`results/finetune_*_errors.csv` holds the 100 worst translations per run; 50 of them are tagged by
+hand for the fine-tuned models.
 
 ## Results
 
@@ -201,23 +207,36 @@ A cell is empty until that model has been run on the current split.
 | LSTM + Bahdanau attention (beam 5) | Pinky | 8.97 | 27.71 |
 | LSTM + Bahdanau attention (greedy) | Pinky | 7.64 | 27.17 |
 | Transformer from scratch | Ujjval | | |
-| mBART-50 fine-tuned | Vinay | | |
-| mT5 fine-tuned | Vinay | | |
-| IndicTrans2 fine-tuned | Vinay | | |
-| Zero-shot pretrained (no fine-tuning) | Vinay | | |
+| mBART-50 fine-tuned (3 epochs) | Vinay | 36.76 | 57.87 |
+| mBART-50 zero-shot | Vinay | 22.14 | 38.35 |
+| mT5-small fine-tuned (5 epochs) | Vinay | 18.97 | 33.79 |
+| mT5-small zero-shot | Vinay | 0.01 | 2.33 |
+| IndicTrans2 | Vinay | not run | not run |
 
-**What we know so far (LSTM only).** Beam search beats greedy decoding by about 1.3 BLEU.
-Error analysis of the 50 worst translations, tagged by hand:
+**What we know so far.** On this split the two fine-tuned pretrained models score above the
+from-scratch LSTM: mBART-50 reaches 36.76 BLEU and mT5-small 18.97, against 8.97 for the LSTM.
+Fine-tuning helps both pretrained models (mBART +14.6 BLEU over zero-shot; mT5-small is useless
+zero-shot at 0.01 BLEU and reaches 18.97 after fine-tuning). Beam search beats greedy decoding by
+about 1.3 BLEU for the LSTM. These are single runs, the Transformer is still missing, and the mT5
+learning rate may be too low (see the limitations below).
 
-| Error category | Count |
-| --- | --- |
-| Wrong meaning | 17 |
-| Junk output (learned from noisy data) | 14 |
-| Noisy reference | 9 |
-| Repetition | 4 |
-| English not copied | 3 |
-| Dropped words | 2 |
-| Wrong word choice | 1 |
+Error analysis: the 50 worst translations of each model, tagged by hand (the categories were
+chosen by the person who tagged them, and this shows the worst sentences, not all errors):
+
+| Error category | LSTM | mBART-50 | mT5-small |
+| --- | --- | --- | --- |
+| Wrong meaning | 17 | 21 | |
+| Junk output | 14 | | 10 |
+| Noisy reference | 9 | 14 | 3 |
+| Dropped words | 2 | 1 | 24 |
+| Repetition | 4 | 1 | 13 |
+| Transliteration error | | 5 | |
+| Wrong word choice | 1 | 5 | |
+| Code-mixing issue | | 3 | |
+| English not copied | 3 | | |
+
+mBART writes fluent English and its worst cases are mostly wrong meaning of colloquial phrases or
+noisy references; mT5-small mostly drops words or repeats itself.
 
 The question "does pretraining help?" can only be answered once the Transformer and the
 pretrained models have been run on the same split.
@@ -227,11 +246,17 @@ pretrained models have been run on the same split.
 - **Noisy references.** PHINC translations are sometimes wrong or only loosely aligned (about 9 of
   the 50 worst LSTM errors were tagged "noisy reference"), which lowers every model's BLEU.
 - **Small data.** About 10.8k training pairs; from-scratch models overfit quickly.
-- **Emoticon-only references.** About 34 training references are still only emoticons such as
-  `) :p` because `p` counts as a letter. The LSTM sometimes outputs `) :p` because of them.
+- **Emoticon-only references.** About 34 training references (and some test references such as
+  `) <url>`) are still only emoticons because `p` or `url` count as letters. The LSTM sometimes
+  outputs `) :p` because of them and they count as "noisy reference" errors.
   Fixing this changes the split again, so it has to be decided once for all models.
 - **Single run per model.** Scores come from one seed; differences of a few tenths of BLEU are
   not meaningful.
+- **mT5 learning rate.** mT5 was fine-tuned with 3e-5, while `src/finetune.py` itself suggests
+  about 3e-4 for mT5, so its score may be under-tuned. Keep this in mind when comparing it with the
+  other models.
+- **IndicTrans2 not run.** Only mBART-50 and mT5-small were fine-tuned, and the Roman to Devanagari
+  (`--translit`) experiment was not tried.
 
 Ideas for after the three model families are done (planned, not started): train on 10%, 25%, 50%
 and 100% of the data to see where pretraining helps most; repeat runs with several seeds or use a
@@ -259,7 +284,7 @@ src/models/lstm_attn.py    LSTM + Bahdanau attention model (#2)
 src/train_lstm.py          training / evaluation script for #2
 src/finetune.py            fine-tuning of pretrained models (#4)
 configs/                   hyperparameters per model
-notebooks/                 Colab notebooks
+notebooks/                 Colab notebooks (LSTM, fine-tuning)
 tests/                     pytest tests
 results/                   score json files, plots and error csvs (small files, committed)
 .github/workflows/         CI (pytest)
