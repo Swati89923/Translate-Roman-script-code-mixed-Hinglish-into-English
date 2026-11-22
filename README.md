@@ -59,7 +59,7 @@ flowchart LR
 | 2 | LSTM + Bahdanau attention | Pinky | #2 | Done, results in `results/` |
 | 3 | Fine-tune mBART / mT5 / IndicTrans2 | Vinay | #4 | Done for mBART-50 and mT5 (fine-tuned and zero-shot), results in `results/`; IndicTrans2 not run |
 | 4 | Transformer from scratch | Ujjval | #3 | Done, results in `results/` |
-| 5 | Final comparison, error analysis, report | Swati | #23 | Done: `src/compare.py`, [report PDF](docs/report/report.pdf) in the course template format, [short version](docs/REPORT.md) |
+| 5 | Final comparison, error analysis, report | Swati | #23 | Done: `src/compare.py` (ranking, chart and error tables from `results/`); the written report is submitted separately |
 
 ## Data
 
@@ -235,9 +235,7 @@ hand for the fine-tuned models.
 Test set, 1,345 sentences, scored with `evaluate()` (BLEU and chrF, higher is better).
 Regenerate the ranking, the chart and the error table from `results/` with `python src/compare.py`
 (outputs: `results/comparison.md`, `results/comparison.png`, `results/error_categories.md`,
-`results/error_examples.md`). The full write-up is the journal-style report [`docs/report/report.pdf`](docs/report/report.pdf)
-(LaTeX source: `docs/report/report.tex`, regenerate with `python docs/report/build_report.py`); a short
-Markdown version is in [`docs/REPORT.md`](docs/REPORT.md).
+`results/error_examples.md`).
 
 ![Comparison of all models](results/comparison.png)
 
@@ -297,7 +295,7 @@ Real examples of every error category: `results/error_examples.md`.
   Transformer (it may also be under-tuned, see the limitations).
 - **The LSTM is last** (8.97), partly because of its word-level vocabulary (`<unk>`), so its gap to the
   Transformer mixes architecture and tokenization.
-- All numbers are single runs. Details, discussion and limitations: [`docs/REPORT.md`](docs/REPORT.md).
+- All numbers are single runs; see the limitations below.
 
 ## Limitations and next steps
 
@@ -348,8 +346,6 @@ src/finetune.py            fine-tuning of pretrained models (#4)
 configs/                   hyperparameters per model
 notebooks/                 Colab notebooks (LSTM, fine-tuning)
 tests/                     pytest tests
-docs/report/               final report in the course template format (report.pdf, report.tex, generator)
-docs/REPORT.md             short Markdown version of the report
 results/                   score json files, plots and error csvs (small files, committed)
 .github/workflows/         CI (pytest)
 ```
