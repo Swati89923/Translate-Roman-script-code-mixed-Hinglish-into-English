@@ -21,3 +21,6 @@ venv/
 .vscode/
 .idea/
 .DS_Store
+
+# Report build files (the PDF and the .tex are committed, the intermediate html is not)
+docs/report/build/
