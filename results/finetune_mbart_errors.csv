@@ -1,0 +1,101 @@
+source,prediction,reference,chrf,error_category
+rt @sheikhimaan : news flash : iss baar bheja tha . jeet gaye .,rt @sheikhimaan : news flash : sent this time. they won.,) <url>,2.4,noisy reference
+is gag se pata chal gaya ki faisal bhai ke haath hindi mein thode tight hai . . . ( it's darpan and not drapan ),this gag made me realize that faisal's hands are a bit tight in hindi. ( it's darpan and not drapan ),-) :p :p,2.4,noisy reference
+@narendramodi,@narendramodi,victory of abvp in university of delhi ....!!! sign of indian youth towards vision of shri modi ..??!!!,4.7,noisy reference
+guddu to superb actor h . . . chhaa gya yaar,guddu is a superb actor.,) :p,5.2,noisy reference
+@rofl_india mujhe bhi milwao iss khushi se,@rofl_india meet me also with this happiness,-p,5.4,noisy reference
+mobarak ied mobarak ??,mobarak ied mobarak ??,happy eid.,6.1,transliteration error
+fact of the day,fact of the day,halloween night is papa john's second busiest night of the year behind super bowl sunday .,7.9,noisy reference
+@byomkesbakshi thank you hume bolo.. humne achche tweet karne chhod diye..taki tum log ko mauka mile,@byomkesbakshi thank you to us. we stopped tweeting good. how did you get people interested?,) #maukamauka @iamkits,7.9,noisy reference
+bhawnao me beh gya londa :p,londa went to sleep :p,caught in feelings boy,8.9,wrong meaning
+nehra uncle dismisses damaad ji . hum indians damaad ji se jyada kaam nhi karwaate .,nehra uncle dismisses mr. danad. we indians do not do much work than mr. danad.,) #indvspak #pakvsind #dilsay,9.9,noisy reference
+"roz ka naya natak, petrol nahi ladki ka bhaav khaana hogaya.<url> â€¦","new moon of roses, not petrol, the girl's belly has been eaten.<url>","new drama everyday,",10.1,wrong meaning
+kuch na mile to #america pe daal dain,if you don't get anything then give it to #america,apko waqae lagta hai #trump itna jahil hai k in sub ko use kare ga ???,10.3,noisy reference
+"ye bandhan atoot hai apna, pavitra bhi.","it is our fault, even pavitra.",this relation is strong and sacred also,11.2,wrong meaning
+..... ye jahaan mil gayaa! yes yes!,..... where did you find this! yes yes!,i got the whole world!,11.3,wrong word choice
+rt @aapdelhifeeds : sangam vihar - work of laying water pipeline in tughlakabad extension . mla,retweet @aapdelhifeeds : sangam vihar - work of laying water pipeline in tughlakabad extension . mla,dinesh mohaniya <url>,11.5,noisy reference
+zingav mitra! bindaas naach tu!,long live mitra! you are a fool!,friend zingaav. you dance with full chill.,11.9,wrong meaning
+"yesterday: talaq talaq talaq abhi: qubool hai, qubool hai, qubool hai?<url>","yesterday: talaq talaq talaq abhi: qubool hai, qubool hai, qubool hai?<url>","yesterday: divorce divorce divorce book: accepted, accepted, accepted ? https: //tvitrkcom/timesnov/stets/85l72ll23452526592",12.0,transliteration error
+@bhaiyyajispeaks haha.. haath dho kar aana bhaiyya ji,@bhaiyyajispeaks haha.. shake your hand and come brother,) @atheist_krishna,13.7,noisy reference
+haarna nahi hai mithaaaaa.,i don't want to lose mithaaaaa.,losing is not sweet.,14.4,noisy reference
+"pehna rahunga tab nahi karna bhai, baaki theek.","first don't make me cry brother, afterwards okay.","i'll keep wearing it then dont do it, else fine",14.8,wrong meaning
+@paglupiggu aaj gujrat ke naam ka hila raha hai kya,@paglupiggu are you laughing in the name of gujrat today?,) @gujaratbot,15.2,noisy reference
+abke wale #bjp bahut bolte,people of today would say #bjp a lot,the new ones speak #bjp too much.,15.5,wrong word choice
+dus bahaane kar ke bharwa di bill.,"after doing so, i broke the bill.",bill was filled by making ten excuses.,15.9,wrong meaning
+"abi tk chhar n bje k konsi ghadi lga rki h,,",what kind of ghadi has come out of this country,its not even 4 yet! what watch is he using?,16.0,wrong meaning
+kya yr maine b mis kr diya #uhh,what have i misunderstood #uhh,"damn man, even i missed it",16.3,code-mixing issue
+ha ha ha tabhi to aisa koi dhokha hua nahin :),"ha ha ha, no one has seen it yet.",ha ha ha that's why a deception like this never happened :),16.5,wrong meaning
+muze to bhashan sunke bahut hasi aya rahe the . ?,we were having a lot of fun in the evening.,i found the speech really funny,16.6,wrong meaning
+@bawli_poonch namoone bhare pade hai,@bawli_poonch namoone is expensive,@bawly_quote samples are full,16.6,wrong meaning
+aarambh hai prachand bole mastakon ki jhund aaj jung ke ghadi ki tum puhaar do <url>,aarambh hai prachand bole mastakon ki jhund aaj jung ke ghadi ki tum puhaar do <url>,"the beginning is a swarm of great speaking masters today, call the clock of war <url>",16.6,transliteration error
+lol....theek hai yaar,laugh out loud....it's good friend,lol! it's okay mate.,16.7,wrong word choice
+hahaha . . . awesone . . . ye h guddu ke t . v . dekhne ke natije,hahaha . . . awesone . . . this is guddu's t . v . it is better to see,these are the results of the fact that gddu is watching a lot of television,16.8,wrong meaning
+tujhe yaad na meri aayee,i don't remember you,you forgot me,17.0,wrong meaning
+bhagvan ka kam karna sub se mukya darm hai.,god's will is done by sub's darkness,to do lord's work is the main religion.,17.2,transliteration error
+aree guddu to blkul mujhpr hi gya hai…hahaha lolzz ! !,dude guddu has just come to me lolz!,guddu contains the qualities i have.,17.3,wrong meaning
+"bas kharaabi ladkon men hi hai bhai, kuch bhi kar le woh.","just poor boys are men, whatever they do, take it.","the defect is in boys brother, they can do anything",17.4,code-mixing issue
+bekar isko host kar diya . .,bekar made him the host.,it was useless to host him,17.5,wrong meaning
+kutthe aahes mitra ye ki!,who knows what mitra is!,what a mess you are!,17.5,wrong meaning
+@bhokaltweet wese yuvi filhal raina se bahut better kar raha hai .. both in batting and bowling .. one day team me manish pandey ayega,@bhokaltweet he is doing much better than daughter raina in both batting and bowling. one day manish pandey will appear in the team.,"the one i plucked thinking as flower, now breaks me like a thorn. follow @piyar_ki_barsatsnd 40404",17.8,noisy reference
+"chain ik pal nahi "" aur koi hal nahi "" #jio ni ~ other operators 0","chain is not working "" and no one is working "" #jio ni ~ other operators 0",i dont get peace for a second and there's no solution for that.,18.3,code-mixing issue
+"aarambh hai prachand bol maston ke jhund, aaj jung ki ghadi ki tum guhaar do #indvsban","aarambh hai prachand bol maston ke jhund, aaj jung ki ghadi ki tum guhaar do #indvsban","the beginning is shattering says the hordes of heads today is the time of war, give a shout #indvsban",18.4,transliteration error
+kejriwal ji ka apna koi sukh-dukh nahi hai. wo modi ji ke sukh se dukhi aur dukh se sukhi hote hain.,kejriwal sir has no brains. those of modi sir are brainless and brainless.,respected kejriwal does not have happiness or sadness of his own. he is sad with respected modi’s joy and happy with his sadness.,18.6,wrong meaning
+"haan, sab modiji ki galati hai","yes, everyone is wrong about modi","yes, sir it is modiji's fault",18.8,wrong word choice
+@chatpatidiary sachh baat hai bas,@chatpatidiary it's true,@patttydry is just the truth,18.8,dropped words
+"oh kudiye inni soni gal na dasso, pyar hojana hai!","oh kudiye, don't make others cry, love has to happen!","oh girl! don't say such a sweet thing, i'll fall in love.",18.9,wrong meaning
+"bas aapki khidmat mein haazir hai hum, kabhi pasand aayega toh kabhi nahi :)","we are stuck in your passion, if you like it then never.","i am ready in your service, sometimes you would like, sometimes you wouldn't.",19.1,wrong meaning
+hahaha lol. meri sardi ne phaad di hai,hahaha lol. my sister-in-law has given me a hug.,hahaha laugh out loud. i am in a very bad condition because of cold.,19.3,wrong meaning
+ha ha ha...dono milke mera ashutosh mat kato.,ha ha ha ... don't abuse me with donkey.,"ha ha ha. you both, do not group up and cut my ashutosh.",19.4,wrong meaning
+marella hai toh woh zinda kaise ho sakta hai? hadh hai.,"if marella is there, how can she live? it is difficult.",how come a dead person can live again? it's too much,19.5,wrong meaning
+haha kya haal chaal hai?,haha what's the matter?,"haha, what is going on?",20.1,wrong word choice
+@ra_bies lol. sardar maine aapka khoon choosa hai... sardar:jaa kaliya jaa jee le apni zindagi,"@ra_bies lol. sardar i'm sorry for your loss. sardar: go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go, go,",@ra_bies laughing out loud. sir i have sucked your blood' sir: go kaaliya go live your life,20.1,repetition
+"paise ka khel babu bhaiyya, zameer to kab ki bech di hai.","ask for money, brother, you have given me a price for how long.","its a game of money, i sold the land already",20.6,
+"bahot hi galat huwa ya, shraddhanjali arpit karte hai :'(","did you get it very wrong, shraddhanjali arpit karte hai :'(","what happened was wrong, let us pay homage!",20.7,
+sarkari suvidhaon ko bhi #gst ke daayare me laya jaaye govt agar suvdhayen nahi de pati hai to aam janta ka tax #refund kare @pmoindia,sarkari suvidhaon ko bhi #gst ke daayare jaya jaya jaya govt if suvidhaon does not have a husband then tax common man #refund kare @pmoindia,government facilities should also be brought under the purview of #gost if gov't is unable to provide facilities then tax # refund of general public @pamindia,20.9,
+pehle roze to rkh le fir eid manana,first read rose then eid,first keep the fast then celebrate eid,21.0,
+madat karo khusi milega app ne bolatha but madat karene se dukhu badha jata he kay karu bhai.???????? plz reply bhai,madat karo khusi milega app ne boltha but madat karene se dukhu badha jata he kay karu bhai.???????? plz reply bhai,"you said that i will get happiness if i help others but my sorrows increased by helping others, what do i do brother.?????? please reply brother",21.1,
+waaaooowww kya maast hai <url>,wowwww what a fun <url>,wow! this is amazing <url>,21.2,
+"tu kisi rail si guzarti hai, main virar local samajh kar darr jaata hu.","you are a railroad freak, i am scared of local virar.","you pass like a train, i got afraid by thinking virar local.",21.3,
+jihadion ke liye aah karna chhod do.<url>,leave it alone for jihadion. <url>,stop doing aah for terrorists .<url>,21.5,
+"parivartan layenge kamal khilayenge - bjp nautanki layenge, joote khayenge - aap","parivartan will bring firecrackers - bjp will bring nautanki, will drink - aap","would bring change would blossom lotus - bjp would bring drama, would eat shoes - aap",21.5,
+"haan, aisa hi samajh lo","yes, consider this only","yes, something like this.",21.7,
+ak jindabaad . . u r delhi cm . . .,ak jindabaad. you are delhi cm.,hail aravind kejriwal. . you are chief minister of delhi . . .,21.7,
+"sauchalay bana lo, zyada zaroorat hai<url> â€¦","make sauchalay, it's too much trouble <url>","make toilets, needed more. <url>",21.9,
+maa ka koi todd nahi ho sakta :-),mother can't have any children.,there's no alternative for mother,22.4,
+last me humesha kyu gadbada deta hai ... hayeee,why do you make me cry in the last time?,why do we ruin everything in the end ... alas,22.6,
+aaj aane ki zidd na karo.,don't make me afraid of coming.,do not insist on coming today.,23.0,
+sooji hai ? halwa banwana tha,is it sooji? i should have called halwa.,have coarse flour? have to make halwa,23.0,
+hosh walo ko khabar kya twitter kya cheez hai.,hosh people know what twitter is.,"what is the news to the senses, what is twitter",23.1,
+galt baat ke muslmano kai khilaf ovisey ka sath de na de.....galt q bola...?,why don't we ask the muslims to fight with ovisey.....galt q said...?,whether ovisey supports the musalmano saying wrong thing or not. why did he lie?,23.1,
+"jo baal sar ka idhar jhad raha hai woh maul-vi ka dus lakh kat raha hai... jaaneja baalon pe fatwa ka ajab sa asar ho raha hai,,","the ball of the government which is going forward is cutting a thousand cucumbers of maul-vi. on the way out, fatwa is being implemented,","the head hair that is falling, and a cleric's 10 lakh is being cut down. dear mandates are having a strange effect on hair.",23.3,
+salman bhai...suna hai ap ko kamar k takleef hai..allah ap ko jald sihat yab kare..ameen suma ameen,"salman bhai...suna hai, you have to take care of the room..allah may you live long..ameen suma ameen",salman brother...i have heard that you have a back problem..hope prophet makes you healthy soon..prayers prayers prayers,23.4,
+udbilaao k aate hi big blow ho gya . . . .,it was a big blow before udbilaao came.,"as soon as the otter came, big blow happened….",23.5,
+"#guessthesong paani na hota jharane na hote, yeh vaadi na hoti, milata na tu to meri jaan nahin hoti, yeh pyaas nahin hoti","#guessthesong there is no water to drink, there is no promise, you are not my life, this is not my destiny.","#guessthesong water wouldn't be there, there wouldn't be waterfalls, this valley wouldn't exist, if you wouldn't have met me, this life wouldn't exist, there wouldn't be any thirst.",23.8,
+"bhai, bhai hai. koi tujhse achhi milegi nahi, koi tujhse kam bhi chalegi nahi","brother, it is brother. no one will like you better, no one will even like you.",i won't find anyone better than you. nor will i accept anyone worse than you.,24.1,
+@hinnaz chittiya kalaiya ve,@hinnaz it is a small thing.,@hinnaz chittiya i have white wrists,24.4,
+ye kya kaur diya tumne yaar!,what did you do to me?,what have you done friend,24.5,
+aaj jis bhi paki ko reply karo.. '#जयहिन्द' zaroor add karo.. gaand jal k kali ho jaegi unki.. aur trend bhi hota rahega,today reply to anybody.. add '#jaihind' for sure.. they will get beaten up.. and the trend will also continue,"if you reply to a pakistani today, make sure to add '#जयहिन्द' in it, their asses would be roasted to black , and it would also keep on trending",24.6,
+uber nahi kuber.. kuber ke khazane ki hai,"it's not uber, it's kuber, it's the product of kuber","its not uber, its the god of wealth. its the treasure of the god of wealth",24.6,
+ye kya baaat hoti h ?,what is this?,what do you mean by this?,24.6,
+kis cheez ke baare mein?,in which way?,about which one?,24.7,
+"@areenge beta jakey parhai karo , aage wohi kaam aegi","@areenge son, please try, work will come next.","@areenge go and study son, it will be most helpful in future.",24.7,
+"chhota-mota kaam karega toh nalasopara jaayega; bada kaam karega, toh dubai jaayega<url>","if someone does a foolish thing, then it will become a crime; if someone does a big thing, then it will become dubai <url>","if you will do small work then you will go to nalasopara; if you will do big work, then you will go to dubai <url>",25.0,
+dikhawe pe jao zyada apni akkal na daudao.,go to the mirror and don't spread your emotions.,"just go on look, don't use more mind.",25.1,
+"sabko kamaane hai, naya bolo","everyone is scared, say new","everyone wants to earn, tell something new",25.1,
+"350 cr kamati ab,","350 cr time now,",she earns 350 crore now,25.2,
+super duper like . yehi hota hai sab jagah :),super duper like . this is all there is :),super fantastic like . it happens everywhere:),25.3,
+"yameenaky bodu vageh kan kasha varu . mi fageeru gaumeh noon , billion dollar vakkan kuru fageeru vegen tha","because of this, i have to go to bodu vaghe. i had to go to gaumeh midday to buy a billion-dollar vehicle.","they are. your faegir gayoum noon, billion dollar walk",25.3,
+bhakt se bada anuyai hota hai.,devotees have a bigger yearning.,a follwer is greater than a devotee.,25.9,
+are bhai ko kuch bat bolo. q ke hum ya pe bohat sare fan ho . is k liye aanahi raha hai. waise b bo kitne k sath bat karenge.,"say something to this brother. i have a lot of fans for this. by the way, how many people will you fight with?",dont say anything to brother because we are too many fans that's why he is not coming however he cannot talk to many,26.0,
+jarut karenge awashya karenge ....aapke fan jo hai,"we will fight, we will awaken, whatever your fan is.",will do it definitely .... your fans are there,26.0,
+yeh srk ki photo kyu lagai hai waise?,why have you put this srk photo?,this photo seem to be of srk,26.1,
+jawaan ho yaaron ye tumko huwa kya?,are you jealous what is this to you?,get young bois what happened to you all?,26.2,
+haha! main abhi utha hu,haha! i am taking it now,haha! i just woke up.,26.3,
+best part is . . . kaise hum ooni dastane pehen k keeping kiya karte the . . aur apne aap ko nayan mongia se kam nahi samajhte the :p,the best part is . . . how we used to keep on going . . and we didn't understand our monkeys,"best part is, how i used to wear and keep thoes gloves, and never thought of myself any less than nayan mongia :p",26.4,
+"keechad mein hi rehna hai toh kamal ban kar raho, suwar nahi.","if you want to live in poverty then become a farmer, not a farmer.","if you have to live in mud only, then live like a lotus, not like a pig.",26.5,
+"indian idol walon, jab pakana hi tha to sonakshi sinha kyon, sonali bendre ko rakh lete. kam se kam shakal to achhi thi.","indian idolaters, when they were hungry, why to give birth to sonakshi, keep sonali together. face was better than face.","indian idol organizers, if you have to bore us this much then you should have kept sonali bendre instead of sonakshi sinha. atleast she is beautiful.",26.5,
+24k nikaalne ke liye account me hona bhi chahiye <url>,account should also be in place for 24k purchases <url>,to withdraw 24 thousand there should be money inthe account <url>,27.0,
+modi ji ne tank nahi puri army hi khadi kardi #jnu me ... ise kahte hai so sunaar ki ek lauhar ki.. jai ho :),"modi sir did not put a tank in #jnu, he put an army in #jnu. this is what he calls a lauhar of so sunaar.. jai ho :)",modi ji has brought not just army but even tanks in #jnu this is full action one response,27.3,
+"har ghar shauchalaya, ya har ghar mein shauchalaya? thoda confusion hai<url>","every house is shauchalaya, or every house is shauchalaya? there is some confusion <url>","toilets in every house, or toilets in every house? there is little confucian hutpas: //twitter.com/nitishkumar/states/638666927263498240",27.3,
+omg salman bhai... assalam o alaikum :),omg salman brother... assalam o alaikum :),omg! greetings salman sir.,27.4,
+tumka kaa bataayi bhaiyya? hamra haal kaa hai.. nikle the hum halwa khaane muh hi jal gaya hai,"what did you say brother? we have a joke. we used to eat halwa, but now it's too late.","what do i tell you brother, what is my situation? i had gone out to eat halwa and my mouth itself got burnt",27.4,

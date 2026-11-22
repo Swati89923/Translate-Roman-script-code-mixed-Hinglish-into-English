@@ -1,0 +1,21 @@
+{
+  "model": "finetune_mt5",
+  "bleu": 18.97,
+  "chrf": 33.79,
+  "num_sentences": 1345,
+  "mode": "fine-tuned",
+  "best_val_loss": 2.7162,
+  "hyperparameters": {
+    "model": "mt5",
+    "hf_name": null,
+    "epochs": 5,
+    "batch_size": 8,
+    "grad_accum": 4,
+    "lr": 3e-05,
+    "beam": 4,
+    "translit": false,
+    "max_train": 0,
+    "max_test": 0,
+    "seed": 42
+  }
+}

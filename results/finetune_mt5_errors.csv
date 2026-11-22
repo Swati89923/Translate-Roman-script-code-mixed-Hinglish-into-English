@@ -1,0 +1,101 @@
+source,prediction,reference,chrf,error_category
+"bahot hi galat huwa ya, shraddhanjali arpit karte hai :'(",@(,"what happened was wrong, let us pay homage!",0.0,junk output (learned from noisy data)
+kisi ne tere badle likh dia hoga :p,@p,someone must have written instead of you,0.0,junk output (learned from noisy data)
+kuch jain engineers bhi hote hai :p,@p,there are also some engineers who are jain,0.0,junk output (learned from noisy data)
+kya yr maine b mis kr diya #uhh,@uhhhhhhhhhhh,"damn man, even i missed it",0.0,repetition
+is seat me girne ka koi chance nhi hai . . . . :p,@p,there is no chance of falling down from this seat,0.0,junk output (learned from noisy data)
+"aajkal metro le raha hu, paise khatam. :p",@p,"nowadays i’m using metro, money over.",0.0,junk output (learned from noisy data)
+"hahaha . . . . . sab fevicol ka jod laga k baith jaate hain , india k match k samay mein . . . . :d :d",@ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .,"hahaha, everyone like a fevicol bond sit during match of india",0.0,repetition
+"login karne ke baad aapke account me 150 ka free recharge add ho jayegaa . . , !","@ , ! , ! , ! , ! , ! , ! , ! , !",after login free recharge of 150 rupees will be added to your account.,0.0,repetition
+"dandiya se singlehood yaad aata hai, aur aansoo aajate hai. :'(",@'(,"dandiya reminds of singlehood, more tears come.",0.0,junk output (learned from noisy data)
+@rofl_india mujhe bhi milwao iss khushi se,@rofl_india,-p,0.0,noisy reference
+tum chahte ho mujh par police case ho jaaye <\3 :'(,@(,you want a police case against me.,0.0,junk output (learned from noisy data)
+ye aaiyena naaa wala character you will find in every school and college . har cheej me hoshiyari deta hai ye character :@ :@ :p,@ :@ :p,this is not a character you will find in every school and college. this aaiyena character gives intelligence in everything:,0.2,junk output (learned from noisy data)
+tune to bada lamba chaura manifesto banaya hai naa . . . . dekhta hoon kitne seats milenge,@ . . . . . . . . . . . . . . .,"you have prepared a very long manifesto, right? let's see how many seats you will get.",0.3,repetition
+main bhi mugerilaal ki tarah khoya rehta tha class main . . . aise school ko toh 21 topon ki salami . :),@ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .,i also used to be lost like mugerilaal in class…. 21 gun salute to such a school,0.3,repetition
+jin jakhmo ko waqt bhar chala hai . . . . . . . . . . . tum kyun unhe chedde jaa rahe ho . .,@ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .,"wounds that have healed with time, why are you teasing those wounds.",0.3,repetition
+ofc :''( . . . but koi ni wifi kab aayega . . . free wifi ka poorn ishtemaal hoga aaj :o :p . . .,@c :''( . . . . . . . . . . . . . . . . . . . . . . . . . . . . .,no problem whenever wifi will come wifi will be used completely,0.3,repetition
+"sach kaha bhai, mard ka dard mard hi samajh sakta hai. <url> â€¦",@url>,"truth told brother, only man can understand the pain of man. http: //twitter.com/naughatidev_/states/638378716708519936",0.7,dropped words
+mene phle bhi bola tha . . . ye guddu bigadtaa ja raha hai . . . samjhao koi ese . . ! ! !,@ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .,i have told you before too . guddu is becoming naughty. someone please make him understand.,0.7,repetition
+mujhe bhi koi book me jagah de do.<url>,@url>,give me a place in a book too.,1.0,dropped words
+"roz ka naya natak, petrol nahi ladki ka bhaav khaana hogaya.<url> â€¦",@url> â€¦,"new drama everyday,",1.1,dropped words
+ek baar toh guddu ko bhi chalaney detey . . ya idhar bhi pair nahi pahunch rahe ? :p,@p,"once, even let guddu walk. . or are not reaching the pairs here",1.2,junk output (learned from noisy data)
+râ€žj'å’v vâ€¹vâ€ â€˜â¤ ready ho bhai aaj ki party ke liye,@râ€žj'å’v vâ€1vâ€,get ready for today's party,1.5,junk output (learned from noisy data)
+ab ye toh sab hi jaante hai ki aradhya bachhan ke peeche bhai ka haath hai. errr. matlab uska bhi career set karenge bhai.,@errr.,everyone knows that bhai is behind aaradhya bachchan. meaning bhai will also set her career,1.6,dropped words
+sari earth ke faadu sticker lagey hotey they ullu bananey ko . . . grrrrr !,@ grrrrr ! grrrrr ! grrrrr ! grrrrr ! grrrrr ! grrrrr !,whole earth's superb stickers would be there to make a fool!,1.7,repetition
+shayadi ke bare me aapka kya khayal h. aap shyadi karoge ya fhir kaware rahoge. muje bahut badi tanson ho rahi h.,@shayadi,what about your marriage will you marry someone or remain single forever i am having lot of tension,1.7,dropped words
+dollar gains on euro amid greek woes: new york - the euro sagged against the dollar on thursday as the revised g . . . http/url,@url,dollar gains on euro amid greek woes: new york - the euro sagged against the dollar on thursday as the revised g . . . http/url,1.8,dropped words
+rt @sheikhimaan : news flash : iss baar bheja tha . jeet gaye .,@sheikhimaan : news flash : iss baar bheja tha . jeet gaye . jeet gaye .,) <url>,2.1,noisy reference
+bhai koi iske tweet copy karo.. ye khud ke tweet copy kiye jaa raha hai.. koi rt bhi nahi karta pic.twitter.com/suyah8zrek,@suyah8zrek,someone copy his tweets. he is copying is own tweets. no one is retweeting. <url>,2.1,dropped words
+..... ye jahaan mil gayaa! yes yes!,@ yes yes! yes yes! yes yes! yes yes! yes yes! yes yes!,i got the whole world!,2.2,repetition
+bura to tab lagta tha jab koi tok deta tha . . . itna bada ho gaya abhi bhi mummy ki godi me baithata hai :(,@ i am a godi . . . . . . . . . . . . . . . . . . . . . . . . . . . .,"it feels bad when someone points out that even after being so big, i sit in my mother's lap.",2.3,repetition
+modi ji ne tank nahi puri army hi khadi kardi #jnu me ... ise kahte hai so sunaar ki ek lauhar ki.. jai ho :),@jnu me,modi ji has brought not just army but even tanks in #jnu this is full action one response,2.3,dropped words
+tab bhi a4 par wife ka photo print karke ke gaya tha? tab bhi do aur log saath mein the? lol<url> â€¦,@url> â€¦,did you take an a4 photo print of your wife then too? there were two more people with you then too? lol <url>,2.4,dropped words
+"kasam se ! aisa imandari ka virus felayenge , bahut mann hai sarkari office mein logon ko kaam karte dekhne ka .. <url>",@url>,"i swear! we will spread the virus of honesty, i really wish to see people in the government office actuall working <url>",2.5,dropped words
+kamal hassan hai aur kamla pasand hai. #aakthoo,@aakthoo,kamal is hassan and kamla is pasand,2.7,dropped words
+"keechad mein hi rehna hai toh kamal ban kar raho, suwar nahi.",@keechad,"if you have to live in mud only, then live like a lotus, not like a pig.",2.9,dropped words
+haaye daiyaan tumhe kaise pata? eeessh... sharam aati hai hatto,@eeessh,oh my god! how do you know? aren't you ashamed? get lost!,3.1,dropped words
+sarkari suvidhaon ko bhi #gst ke daayare me laya jaaye govt agar suvdhayen nahi de pati hai to aam janta ka tax #refund kare @pmoindia,@pmoindia,government facilities should also be brought under the purview of #gost if gov't is unable to provide facilities then tax # refund of general public @pamindia,3.1,dropped words
+bus maa hi sab samjhti hai . . . ye guddu hamesha maa ki yaad dilata hai . . . :'(,@ . . . . . . . . . . . . . . . . :'(,only mother understands everything. this guddu always reminds me of mother. : '(,3.2,repetition
+jo log apni thwacha ' ke kaaran #holi nahi kahelte unhe koi bata do ki beauty sirf skin deep hi hoti hai .,@holi,"those who don't play #holi considering skin damage , tell them beauty isn't just a skin color",3.3,dropped words
+kyaa aap bhi free mobile ya dth ya laptop chahte hai pahle isse dekhe ????????????? #jio,@jio,do you also want free mobile or dth or laptop? please watch this. #jio,3.3,dropped words
+hahaha . . . awesone . . . ye h guddu ke t . v . dekhne ke natije,@ awesone . . .,these are the results of the fact that gddu is watching a lot of television,3.3,dropped words
+"dikh raha hai, angrezi bol lo yaar",@angrezi,"it is being seen, please speak in english, friends",3.3,dropped words
+"yesterday: talaq talaq talaq abhi: qubool hai, qubool hai, qubool hai?<url>",@today: talaq talaq,"yesterday: divorce divorce divorce book: accepted, accepted, accepted ? https: //tvitrkcom/timesnov/stets/85l72ll23452526592",3.4,dropped words
+ab log 2 rt ke joke ke liye bhi phd ki research karwa denge. kya yahi hain acche din<url>,@url>,now people will get phd research done on this joke with 2 rt. are these the good days? <url>,3.4,dropped words
+@bhokaltweet wese yuvi filhal raina se bahut better kar raha hai .. both in batting and bowling .. one day team me manish pandey ayega,@bhokaltweet,"the one i plucked thinking as flower, now breaks me like a thorn. follow @piyar_ki_barsatsnd 40404",3.4,noisy reference
+bhai jaan . aa bhi jao,@ bhai jaan . aa bhi jaan . aa bhi jaan . aa bhi jaan .,brother . come on,3.5,repetition
+aise batein choclate ka daba gift kar k samjhae jati hai :p <url>,@url>,such wodrs can be made to understand only after gifting a box of chocolates :p <url>,3.6,dropped words
+gareeb ko iss cheez se bhi khushi mil jayegi.,@ gareeb,poor will be happy with this thing also,3.7,dropped words
+up ke gaon me to log aaj tak bijli ka matlab bhi nahin samjh paye<url>,@url>,the villages of up haven't yet understood the meaning of electricity. <url>,3.9,dropped words
+"""badon ki izzat karo"" theek hai, kiske bade hai yahan?",@badon's izzat?,"""respect elders"" okay, whose elder is it here?",3.9,dropped words
+2-3 punch wo bhi churaye huey...aur logon par satire maar rahe ho :) irony,@ irony,"2-3 punch lines, that too stolen… despite that you're commenting on people's satire :) irony",4.0,
+"bas kharaabi ladkon men hi hai bhai, kuch bhi kar le woh.",@ kharaabi ladkon,"the defect is in boys brother, they can do anything",4.1,
+"hahahah ""bohot saal"" likhna tha, ""saal ke end"" galti se likh diya :p","@bohot saal""","i had to write ""many years"" but i mistakenly wrote ""year's end"".",4.1,
+4 baj gaye lekin bhai abi aaye nahi,@ 4 baj gaye,it is 4 already yet brother hasn't come.,4.2,
+"kahan gaya? yahin hu main, tumhare dil mein.",@ kahan gaya?,"where did i go? i am here, in your heart",4.3,
+jihadion ke liye aah karna chhod do.<url>,@jihadion,stop doing aah for terrorists .<url>,4.4,
+such a high voltage match ... but poor poor play by both teams .. kind of bore game .. no chances created by either tram #munliv,@munliv,such a high voltage match but very poor play by both teams. kind of bore game. no chances created by either tram #munliv,4.5,
+"lets hope for achhe din #mumbailocal "" upar ka prabhu niche ke prabhu ko budi de "" #railbudget2015 @sardesairajdeep <url>",@sardesairajdeep <url>,lets hope for good days #mumbailocal may the real god give intellect to the god of the country,4.6,
+"yahi hota hai, jab 10-10 over khelne ke potential walo ko 50 overs ka match khelne ko mil jaye. #pandya",@pandya,this is what happens….when people with potential to play 10 overs match get a chance to play 50 overs match. #pandya,4.6,
+#dhoni maar nahi hai shant ho jao ... kal ke liya bhi kuch rakhu aaj he sab tweet kar dunge kya,@dhoni is shant.,"#dhoni don't keep hitting, be calm, keeping something to tweet tomorrow, will not tweet everything today only",4.6,
+"sukr hai ki nahi laga #ishq par #gst ""koi varna to tu bhi meri #had se bahar ho jati.",@skr is a #had.,thank god that there is no #gst on love #ishq or else you would have been out of my reach #had,4.7,
+@narendramodi,@narendramodi,victory of abvp in university of delhi ....!!! sign of indian youth towards vision of shri modi ..??!!!,4.7,
+"doston , bhaiayon or bahno meri sarkar aayegi to 1year ma 3cr berojgaron ko naukri dunga ... he he # _","@ doston , bhaiayon or bahno","friends, brothers and sisters. if my government comes to power then within 1 year i will provide jobs to 3 crore unemployed people.",4.7,
+guddu to superb actor h . . . chhaa gya yaar,@ guddu to superb actor h . .,) :p,4.9,
+"""meri hai par kabhi kabhi papa bhi chalaa lete hai.."" - jr. ab",@jr.,"""it is mine but sometimes dad uses it."" - jr. ab",4.9,
+sooraj hua madham chand jalne lagapic.twitter.com/pz9lmjoupr,@pz9lmjoupr,suraj hua medium moon jal to lagpisi.twitter.com / pause5lmjooper,5.0,
+"jin zakhmon ko waqt bhar chala hai, tum kyu unhe unglee kiye jaa rahe ho? #aadab",@aadabb,why are you persistenty fingering at the wounds that were healed by time? #aadab,5.0,
+"bhai, bhai hai. koi tujhse achhi milegi nahi, koi tujhse kam bhi chalegi nahi","@ bhai, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother, brother",i won't find anyone better than you. nor will i accept anyone worse than you.,5.1,
+is gag se pata chal gaya ki faisal bhai ke haath hindi mein thode tight hai . . . ( it's darpan and not drapan ),@ it's darpan and not drapan ),-) :p :p,5.2,
+ye tweet karne ke liye bhaijaan ne naya account banaya hai. <url> â€¦,@url>,for tweeting this brother has made a new account <url> â€¦,5.2,
+uber nahi kuber.. kuber ke khazane ki hai,@uber is kuber.,"its not uber, its the god of wealth. its the treasure of the god of wealth",5.4,
+"sabhi college/university me padhai hoti h "" pr #jnu me deshdrohi kand hote h ... freedom of speech ke nam pe","@jnu me deshdrohi kand hote h """,while every college/university is studying but #jnu is working on antinational activities in the name of freedom of speech.,5.4,
+oh bhaisahab!! cheers,@ bhaisahab!!,oh brother! cheers,5.5,
+bhai ye kachua sir galat kyo likh rahe hai a2+b2=c2,@b2=c2,"brother, why is this tortoise-like sir writing it wrong? a2+b2=c2",5.6,
+@g0v_gk hasane k liye kuch ho to bhejo,@g0v_gk,@gv_gak send something if you want to laugh,5.6,
+bjp waaley kehtey hai 'central' mein bjp ki sarkar hai toh delhi mein bhi bjp ki sarkar hogi toh delhi ka kaam ho paayega warna sub kaam thap padh jaayega . . . really ? ? ?,@central's sarkar is delhi. . . . . . . . . . . . . . . . . . . . . . . . . . . .,"bjp says that there is bjp government in the centre, so if there will be bjp government in delhi then only work will be possible in delhi, otherwise all the work will come to a stop, really?",5.8,
+"subah se 3:30 ka wait kar rahe hai, aapne 4pm bhi ho gaye.. ab toh aa jao aap plz plz",@subah se 3:30 is 3:30.,"from morning we are waiting for 3:30pm, its 4pm now. please come now.",5.8,
+iska matlab hai 63 kaand huay hain aap mein <url>,@url>,this means there have been 63 bad events in aap <url>,5.8,
+nehru: bapu kuch saal baad tere ghar me tushar paida hoga gandhi: hahaha..rahul gandhi.. awaaz neeche n: hahahapic.twitter.com/f2m2kzdxej,@f2m2kzdx,"nehru: bapu, after some years tushar will take birth in your home. gandhi: rahul gandhi. keep your voice low. pic.twitter.com/f2m2kzdxej",5.9,
+bhakt to aakhir bhakt hote hai chahe #modi ke ho ya #trump ke,@trump,devotees are devotees only whether they follow #modi or #trump,5.9,
+aaj jis bhi paki ko reply karo.. '#जयहिन्द' zaroor add karo.. gaand jal k kali ho jaegi unki.. aur trend bhi hota rahega,@जयहिन्द',"if you reply to a pakistani today, make sure to add '#जयहिन्द' in it, their asses would be roasted to black , and it would also keep on trending",5.9,
+mobarak ied mobarak ??,@mobarak ied mobarak ??,happy eid.,6.0,
+bollywood ne bachchon ko barbaad kar diya hai . . . . . . . . . satyanaash,@ satyanaash,bollywood has wated children's lives,6.0,
+achhai dikhai nahi deti.,@achhai dikhai nahi deti.,don't see good these days.,6.1,
+pyar tumhe mode pe le aaya?,@pyar tumhe mode?,love has brought you at crossroads?,6.2,
+salman bhai...suna hai ap ko kamar k takleef hai..allah ap ko jald sihat yab kare..ameen suma ameen,@ salman bhai,salman brother...i have heard that you have a back problem..hope prophet makes you healthy soon..prayers prayers prayers,6.2,
+aaj aane ki zidd na karo.,@aaj aane ki zidd na karo.,do not insist on coming today.,6.2,
+sooji hai ? halwa banwana tha,@ i am going to be a good thing?,have coarse flour? have to make halwa,6.2,
+"yaar aaoke bf ki kahani doosre ladkon ko na sunao, aapke pyar ki aatmakatha aap hi ko mubarak","@yaar aaoke bf i am aaoke bf, i am aaoke bf i am aaoke bf, i am aaoke bf i am aaoke bf, i am aaoke","hey girl, don't narrate the stories about your boyfriend to other boys. keep your love story to yourself.",6.3,
+haarna nahi hai mithaaaaa.,@herna nahi hai mithaaaaa.,losing is not sweet.,6.4,
+yo! jald hi ek aur session karte hai,@yo!,yo! let's soon do one more session.,6.4,
+rupee ke girne se yaad aaya sonia gandhi ke tbyat kaise hai # pappu :p,@ pappu :pappu :pappu :pappu :pappu :pappu,"just remembered after watching the rate rupee fall, how is sonia gandhi #pappu",6.5,
+log matlab kuch bhi rt kar denge. #lulz,@lulz,"people really, just retweet anything. #lulz",6.6,
+"@0__1 unka haath, aur unka samaan jo chahe kare",@0__1,"@0__1 their hand and their luggage, it is upto them whatever they do.",6.7,
+kyun tum paise doge naya sochne ke?,@kyun tum paise doge?,will you give money to think something new?,6.7,
+"@lokardi_rt tujhe sign up kar ke 1000 rs mere account me daalne padenge, tab hi recharge ho payega.",@lokardi_rt,"@locardi_rat you should first sign up and send 1000rs to my account, then and only the recharge is done.",6.7,
+jawaan ho yaaron ye tumko huwa kya?,@ jawaan ho yaaron?,get young bois what happened to you all?,6.8,
+alag hi love story chal rahi hai<url>,@url>,a different type of love story going on <url>,6.8,
+"sapne dikhaane padte hai, aakhir usse aapke sapno mein hi invest karni hai.",@sapne dikhaane padte hai.,"you need to show dreams, at the end she want to invest on your dream only.",6.8,
+"tu chahe beh jaaye tu laut ke aayega, ye jo des hai tera, swades hai tera tujhe hai pukara - old monk",@ old monk,"even if you flow away, you will come back, this your country, your swades, it is calling you - old monk",6.8,

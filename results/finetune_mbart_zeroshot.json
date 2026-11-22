@@ -1,0 +1,21 @@
+{
+  "model": "finetune_mbart_zeroshot",
+  "bleu": 22.14,
+  "chrf": 38.35,
+  "num_sentences": 1345,
+  "mode": "zero-shot",
+  "best_val_loss": null,
+  "hyperparameters": {
+    "model": "mbart",
+    "hf_name": null,
+    "epochs": 0,
+    "batch_size": 8,
+    "grad_accum": 4,
+    "lr": 3e-05,
+    "beam": 4,
+    "translit": false,
+    "max_train": 0,
+    "max_test": 0,
+    "seed": 42
+  }
+}
