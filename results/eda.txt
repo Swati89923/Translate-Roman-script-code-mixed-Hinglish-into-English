@@ -2,6 +2,11 @@ train n=10762  src_len mean=13.3 max=40  tgt_len mean=12.5 max=46  word-overlap 
 val   n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.5 max=37  word-overlap mean=0.28
 test  n= 1345  src_len mean=13.1 max=37  tgt_len mean=12.2 max=37  word-overlap mean=0.27
 
+References without a real word (only emoticons, mentions, hashtags or <url>):
+  train   39 of 10762 (0.36%)
+  val      4 of 1345 (0.30%)
+  test    10 of 1345 (0.74%)
+
 Example training pairs:
   HI-EN: ghost rider 2's a bad movie compared to the 1st .
   EN   : ghost rider 2's a bad movie compared to the 1st .

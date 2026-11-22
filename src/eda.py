@@ -9,6 +9,7 @@ the README / final report.
 """
 
 import random
+import re
 import statistics
 from pathlib import Path
 
@@ -28,6 +29,14 @@ def overlap_ratio(src: str, tgt: str) -> float:
     return sum(w in t for w in s) / len(s) if s else 0.0
 
 
+WORD_RE = re.compile(r"[^\W\d_]{2,}")  # a "real word": at least two letters in a row
+
+
+def has_real_word(text: str) -> bool:
+    """False for references that are only emoticons, mentions, hashtags or <url> (e.g. ") <url>")."""
+    return WORD_RE.search(re.sub(r"<url>|@\w+|#\w+", "", text)) is not None
+
+
 def main() -> None:
     lines = []
     for name in ("train", "val", "test"):
@@ -41,6 +50,12 @@ def main() -> None:
             f"tgt_len mean={statistics.mean(tgt_len):.1f} max={max(tgt_len)}  "
             f"word-overlap mean={statistics.mean(ov):.2f}"
         )
+
+    lines.append("\nReferences without a real word (only emoticons, mentions, hashtags or <url>):")
+    for name in ("train", "val", "test"):
+        pairs = read_tsv(SPLIT_DIR / f"{name}.tsv")
+        bad = sum(not has_real_word(t) for _, t in pairs)
+        lines.append(f"  {name:5s} {bad:4d} of {len(pairs)} ({100 * bad / len(pairs):.2f}%)")
 
     lines.append("\nExample training pairs:")
     train = read_tsv(SPLIT_DIR / "train.tsv")
