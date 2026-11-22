@@ -28,6 +28,10 @@ jobs:
           pip install -r requirements.txt
           # Needed by the SentencePiece test; without it that test would be skipped.
           pip install sentencepiece
+          # CPU build of torch (small, no GPU needed) so the LSTM and Transformer tests run
+          # instead of being skipped.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
 
       - name: Run tests
-        run: python -m pytest -v
+        # -rs prints the reason for every skipped test, so a skip never goes unnoticed.
+        run: python -m pytest -v -rs
